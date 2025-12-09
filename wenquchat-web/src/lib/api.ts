@@ -99,7 +99,14 @@ export const convertCozeFileToMediaAsset = (cozeFile: CozeFile, messageId: strin
 /**
  * 发送消息（集成Coze工作流）
  */
-export const sendMessage = async (text: string, _contextFiles: MediaAsset[]) => {
-    console.log('发送消息到Coze工作流:', text);
-    return await callCozeWorkflow(text);
+export const sendMessage = async (text: string, contextFiles: MediaAsset[]) => {
+    // 构建包含引用文件信息的输入文本
+    let fullInput = text;
+    if (contextFiles.length > 0) {
+        const fileReferences = contextFiles.map(file => `[引用文件: ${file.filename}]`).join(' ');
+        fullInput = `${fileReferences} ${text}`;
+    }
+    
+    console.log('发送消息到Coze工作流:', fullInput);
+    return await callCozeWorkflow(fullInput);
 };

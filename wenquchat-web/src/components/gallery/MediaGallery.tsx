@@ -1,11 +1,11 @@
 import React, { useState } from 'react';
 import { useWorkspaceStore } from '@/store/useWorkspaceStore';
 import type { MediaAsset } from '@/types';
-import { FileIcon, DownloadIcon, ExternalLinkIcon, ImageIcon, FileTextIcon, FileSpreadsheetIcon, Presentation, FileArchiveIcon } from 'lucide-react';
+import { FileIcon, DownloadIcon, ExternalLinkIcon, ImageIcon, FileTextIcon, FileSpreadsheetIcon, Presentation, FileArchiveIcon, MessageSquareIcon } from 'lucide-react';
 import { MediaDetailModal } from './MediaDetailModal';
 
 export const MediaGallery: React.FC = () => {
-    const mediaAssets = useWorkspaceStore(state => state.mediaAssets);
+    const { mediaAssets, addContextFile } = useWorkspaceStore();
     const [selectedAsset, setSelectedAsset] = useState<MediaAsset | null>(null);
     const [isModalOpen, setIsModalOpen] = useState(false);
     const [filterType, setFilterType] = useState<'all' | 'image' | 'video' | 'document'>('all');
@@ -265,12 +265,12 @@ export const MediaGallery: React.FC = () => {
                                     <button
                                         onClick={(e) => {
                                             e.stopPropagation();
-                                            handleDownload(asset);
+                                            addContextFile(asset);
                                         }}
                                         className="flex-1 flex items-center justify-center gap-1 px-2 py-1 text-[10px] bg-primary/10 hover:bg-primary/20 text-primary rounded-lg border border-primary/20 transition-colors"
                                     >
-                                        <DownloadIcon className="w-3 h-3" />
-                                        下载
+                                        <MessageSquareIcon className="w-3 h-3" />
+                                        插入对话
                                     </button>
                                 </div>
                             </div>
@@ -284,7 +284,7 @@ export const MediaGallery: React.FC = () => {
                 asset={selectedAsset}
                 isOpen={isModalOpen}
                 onClose={handleCloseModal}
-                onDownload={handleDownload}
+                onDownload={addContextFile}
                 onPreview={handlePreview}
             />
         </div>

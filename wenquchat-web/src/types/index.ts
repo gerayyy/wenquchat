@@ -74,6 +74,7 @@ export interface Message {
     role: 'user' | 'assistant';
     text: string; // Plain text
     timestamp: number;
+    referencedFiles?: MediaAsset[]; // 引用的文件列表
 }
 
 export interface WorkspaceState {

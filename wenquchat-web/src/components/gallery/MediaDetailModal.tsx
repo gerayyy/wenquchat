@@ -1,6 +1,6 @@
 import React from 'react';
 import type { MediaAsset } from '@/types';
-import { XIcon, DownloadIcon, ExternalLinkIcon, FileIcon, ImageIcon, FileTextIcon, FileSpreadsheetIcon, Presentation, FileArchiveIcon } from 'lucide-react';
+import { XIcon, DownloadIcon, ExternalLinkIcon, FileIcon, ImageIcon, FileTextIcon, FileSpreadsheetIcon, Presentation, FileArchiveIcon, MessageSquareIcon } from 'lucide-react';
 
 interface MediaDetailModalProps {
     asset: MediaAsset | null;
@@ -114,8 +114,8 @@ export const MediaDetailModal: React.FC<MediaDetailModalProps> = ({
                                 onClick={() => onDownload(asset)}
                                 className="flex items-center gap-1 px-2 py-1 text-[10px] bg-green-600 hover:bg-green-700 text-white rounded-lg transition-colors"
                             >
-                                <DownloadIcon className="w-3 h-3" />
-                                下载文件
+                                <MessageSquareIcon className="w-3 h-3" />
+                                插入对话
                             </button>
                                 </div>
                             </div>
@@ -205,8 +205,8 @@ export const MediaDetailModal: React.FC<MediaDetailModalProps> = ({
                             onClick={() => onDownload(asset)}
                             className="flex-1 flex items-center justify-center gap-1 px-2 py-1 text-[10px] bg-green-600 hover:bg-green-700 text-white rounded-lg transition-colors"
                         >
-                            <DownloadIcon className="w-3 h-3" />
-                            下载文件
+                            <MessageSquareIcon className="w-3 h-3" />
+                            插入对话
                         </button>
                         </div>
                     </div>

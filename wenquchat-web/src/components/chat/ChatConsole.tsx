@@ -44,6 +44,7 @@ export const ChatConsole: React.FC = () => {
             role: 'user' as const,
             text: inputValue,
             timestamp: Date.now(),
+            referencedFiles: [...contextFiles], // 存储引用的文件
         };
         addMessage(userMsg);
         setInputValue('');
@@ -186,6 +187,18 @@ export const ChatConsole: React.FC = () => {
                                             msg.text === '正在思考中...' && "text-muted-foreground animate-pulse"
                                         )}>
                                             {msg.text}
+                                        </div>
+                                    )}
+                                    
+                                    {/* 引用文件标签 - 显示在消息底部 */}
+                                    {msg.referencedFiles && msg.referencedFiles.length > 0 && (
+                                        <div className="mt-3 pt-2 border-t border-white/20 flex flex-wrap gap-1">
+                                            {msg.referencedFiles.map((file) => (
+                                                <div key={file.id} className="flex items-center gap-1 bg-white/80 text-foreground px-2 py-1 rounded-full text-xs border border-white/30 shadow-xs">
+                                                    <FileIcon className="w-3 h-3 text-primary" />
+                                                    <span className="max-w-[100px] truncate">{file.filename}</span>
+                                                </div>
+                                            ))}
                                         </div>
                                     )}
                                 </div>
