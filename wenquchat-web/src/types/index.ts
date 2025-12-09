@@ -1,4 +1,4 @@
-export type MediaType = 'image' | 'video' | 'pdf' | 'doc' | 'docx' | 'xls' | 'xlsx' | 'ppt' | 'pptx' | 'psd' | 'unknown';
+export type MediaType = 'image' | 'video' | 'pdf' | 'doc' | 'docx' | 'xls' | 'xlsx' | 'ppt' | 'pptx' | 'psd' | 'mp4' | 'avi' | 'mov' | 'wmv' | 'flv' | 'mkv' | 'unknown';
 
 // Coze 工作流相关类型
 export interface CozeWorkflowResponse {

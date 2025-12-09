@@ -1,6 +1,10 @@
 import React from 'react';
 import type { MediaAsset } from '@/types';
-import { XIcon, DownloadIcon, ExternalLinkIcon, FileIcon, ImageIcon, FileTextIcon, FileSpreadsheetIcon, Presentation, FileArchiveIcon, MessageSquareIcon } from 'lucide-react';
+import { XIcon, DownloadIcon, ExternalLinkIcon, FileIcon, ImageIcon, FileTextIcon, FileArchiveIcon, MessageSquareIcon } from 'lucide-react';
+import { PDFViewer } from './PDFViewer';
+import { OfficeDocumentViewer } from './OfficeDocumentViewer';
+import { VideoPlayer } from './VideoPlayer';
+import { ImageViewer } from './ImageViewer';
 
 interface MediaDetailModalProps {
     asset: MediaAsset | null;
@@ -19,6 +23,115 @@ export const MediaDetailModal: React.FC<MediaDetailModalProps> = ({
 }) => {
     if (!isOpen || !asset) return null;
 
+    // 获取文件扩展名
+    const getFileExtension = (filename: string) => {
+        return filename.split('.').pop()?.toLowerCase() || '';
+    };
+
+    // 渲染预览内容
+    const renderPreviewContent = () => {
+        switch (asset.type) {
+            case 'image':
+                // 使用自定义图片查看器，支持缩放和拖拽
+                return (
+                    <ImageViewer
+                        src={asset.url}
+                        alt={asset.filename}
+                        className="w-full h-full"
+                        maxZoom={5}
+                        minZoom={0.5}
+                        zoomStep={0.2}
+                    />
+                );
+
+            case 'pdf':
+                // 检查文件扩展名是否为PDF
+                const pdfExt = getFileExtension(asset.filename);
+                if (pdfExt === 'pdf') {
+                    return (
+                        <PDFViewer
+                            fileUrl={asset.url}
+                            fileName={asset.filename}
+                            pageCount={asset.metadata?.pageCount}
+                            onDownload={() => onDownload(asset)}
+                            onPreview={() => onPreview(asset)}
+                        />
+                    );
+                }
+                break;
+
+            case 'doc':
+            case 'docx':
+            case 'xls':
+            case 'xlsx':
+            case 'ppt':
+            case 'pptx':
+                // 检查文件扩展名是否为Office文档
+                const officeExtensions = ['doc', 'docx', 'xls', 'xlsx', 'ppt', 'pptx'];
+                const officeExt = getFileExtension(asset.filename);
+                if (officeExtensions.includes(officeExt)) {
+                    return (
+                        <OfficeDocumentViewer
+                            fileUrl={asset.url}
+                            fileName={asset.filename}
+                            fileType={asset.type}
+                            onDownload={() => onDownload(asset)}
+                            onPreview={() => onPreview(asset)}
+                        />
+                    );
+                }
+                break;
+
+            case 'mp4':
+            case 'avi':
+            case 'mov':
+            case 'wmv':
+            case 'flv':
+            case 'mkv':
+                // 检查文件扩展名是否为视频格式
+                const videoExtensions = ['mp4', 'avi', 'mov', 'wmv', 'flv', 'mkv', 'webm', 'm4v'];
+                const fileExt = getFileExtension(asset.filename);
+                if (videoExtensions.includes(fileExt)) {
+                    return (
+                        <VideoPlayer
+                            fileUrl={asset.url}
+                            fileName={asset.filename}
+                            onDownload={() => onDownload(asset)}
+                            onPreview={() => onPreview(asset)}
+                        />
+                    );
+                }
+                break;
+
+            default:
+                return (
+                    <div className="bg-white rounded-xl p-8 shadow-lg text-center">
+                        <div className="w-24 h-24 rounded-2xl bg-gradient-to-br from-blue-500 to-purple-600 flex items-center justify-center text-white mx-auto mb-4">
+                            {getFileIcon(asset.type)}
+                        </div>
+                        <h3 className="text-lg font-medium text-gray-900 mb-2">{asset.filename}</h3>
+                        <p className="text-gray-500 text-sm mb-4">此文件类型不支持预览</p>
+                        <div className="flex gap-3 justify-center">
+                            <button
+                                onClick={() => onPreview(asset)}
+                                className="flex items-center gap-1 px-2 py-1 text-[10px] bg-blue-600 hover:bg-blue-700 text-white rounded-lg transition-colors"
+                            >
+                                <ExternalLinkIcon className="w-3 h-3" />
+                                打开文件
+                            </button>
+                            <button
+                                onClick={() => onDownload(asset)}
+                                className="flex items-center gap-1 px-2 py-1 text-[10px] bg-green-600 hover:bg-green-700 text-white rounded-lg transition-colors"
+                            >
+                                <MessageSquareIcon className="w-3 h-3" />
+                                插入对话
+                            </button>
+                        </div>
+                    </div>
+                );
+        }
+    };
+
     // 根据文件类型获取对应的图标
     const getFileIcon = (type: MediaAsset['type']) => {
         switch (type) {
@@ -31,10 +144,10 @@ export const MediaDetailModal: React.FC<MediaDetailModalProps> = ({
                 return <FileTextIcon className="w-6 h-6" />;
             case 'xls':
             case 'xlsx':
-                return <FileSpreadsheetIcon className="w-6 h-6" />;
+                return <FileTextIcon className="w-6 h-6" />;
             case 'ppt':
             case 'pptx':
-                return <Presentation className="w-6 h-6" />;
+                return <FileTextIcon className="w-6 h-6" />;
             case 'psd':
                 return <FileArchiveIcon className="w-6 h-6" />;
             default:
@@ -75,51 +188,8 @@ export const MediaDetailModal: React.FC<MediaDetailModalProps> = ({
 
                 <div className="flex flex-col lg:flex-row max-h-[calc(80vh-80px)]">
                     {/* 左侧预览区 */}
-                    <div className="lg:w-2/3 p-6 bg-gray-50 flex items-center justify-center overflow-y-auto">
-                        {asset.type === 'image' ? (
-                            <div className="relative rounded-xl overflow-hidden bg-white shadow-lg">
-                                <img
-                                    src={asset.url}
-                                    alt={asset.filename}
-                                    className="w-full h-80 object-contain"
-                                    onError={(e) => {
-                                        const target = e.target as HTMLImageElement;
-                                        target.style.display = 'none';
-                                        target.nextElementSibling?.classList.remove('hidden');
-                                    }}
-                                />
-                                <div className="hidden absolute inset-0 flex items-center justify-center bg-gray-100">
-                                    <div className="text-center text-gray-500">
-                                        <ImageIcon className="w-16 h-16 mx-auto mb-2 opacity-50" />
-                                        <p>图片加载失败</p>
-                                    </div>
-                                </div>
-                            </div>
-                        ) : (
-                            <div className="bg-white rounded-xl p-8 shadow-lg text-center">
-                                <div className="w-24 h-24 rounded-2xl bg-gradient-to-br from-blue-500 to-purple-600 flex items-center justify-center text-white mx-auto mb-4">
-                                    {getFileIcon(asset.type)}
-                                </div>
-                                <h3 className="text-lg font-medium text-gray-900 mb-2">{asset.filename}</h3>
-                                <p className="text-gray-500 text-sm mb-4">此文件类型不支持预览</p>
-                                <div className="flex gap-3 justify-center">
-                                    <button
-                                onClick={() => onPreview(asset)}
-                                className="flex items-center gap-1 px-2 py-1 text-[10px] bg-blue-600 hover:bg-blue-700 text-white rounded-lg transition-colors"
-                            >
-                                <ExternalLinkIcon className="w-3 h-3" />
-                                打开文件
-                            </button>
-                            <button
-                                onClick={() => onDownload(asset)}
-                                className="flex items-center gap-1 px-2 py-1 text-[10px] bg-green-600 hover:bg-green-700 text-white rounded-lg transition-colors"
-                            >
-                                <MessageSquareIcon className="w-3 h-3" />
-                                插入对话
-                            </button>
-                                </div>
-                            </div>
-                        )}
+                    <div className="lg:w-2/3 p-6 bg-gray-50 flex items-center justify-center overflow-y-auto relative">
+                        {renderPreviewContent()}
                     </div>
 
                     {/* 右侧信息区 */}
@@ -195,19 +265,30 @@ export const MediaDetailModal: React.FC<MediaDetailModalProps> = ({
                         {/* 操作按钮 */}
                         <div className="mt-6 flex gap-2 flex-shrink-0">
                             <button
-                            onClick={() => onPreview(asset)}
-                            className="flex-1 flex items-center justify-center gap-1 px-2 py-1 text-[10px] bg-blue-600 hover:bg-blue-700 text-white rounded-lg transition-colors"
-                        >
-                            <ExternalLinkIcon className="w-3 h-3" />
-                            在新窗口打开
-                        </button>
-                        <button
-                            onClick={() => onDownload(asset)}
-                            className="flex-1 flex items-center justify-center gap-1 px-2 py-1 text-[10px] bg-green-600 hover:bg-green-700 text-white rounded-lg transition-colors"
-                        >
-                            <MessageSquareIcon className="w-3 h-3" />
-                            插入对话
-                        </button>
+                                onClick={() => onPreview(asset)}
+                                className="flex-1 flex items-center justify-center gap-1 px-2 py-1 text-[10px] bg-blue-600 hover:bg-blue-700 text-white rounded-lg transition-colors"
+                            >
+                                <ExternalLinkIcon className="w-3 h-3" />
+                                在新窗口打开
+                            </button>
+                            <button
+                                onClick={() => onDownload(asset)}
+                                className="flex-1 flex items-center justify-center gap-1 px-2 py-1 text-[10px] bg-green-600 hover:bg-green-700 text-white rounded-lg transition-colors"
+                            >
+                                <MessageSquareIcon className="w-3 h-3" />
+                                插入对话
+                            </button>
+                        </div>
+                        
+                        {/* 下载文件按钮 - 浅色样式 */}
+                        <div className="mt-2 flex-shrink-0">
+                            <button
+                                onClick={() => onDownload(asset)}
+                                className="w-full flex items-center justify-center gap-1 px-2 py-1 text-[10px] bg-gray-100 hover:bg-gray-200 text-gray-700 border border-gray-300 rounded-lg transition-colors"
+                            >
+                                <DownloadIcon className="w-3 h-3" />
+                                下载文件
+                            </button>
                         </div>
                     </div>
                 </div>

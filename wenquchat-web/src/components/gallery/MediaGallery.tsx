@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import { useWorkspaceStore } from '@/store/useWorkspaceStore';
 import type { MediaAsset } from '@/types';
-import { FileIcon, DownloadIcon, ExternalLinkIcon, ImageIcon, FileTextIcon, FileSpreadsheetIcon, Presentation, FileArchiveIcon, MessageSquareIcon } from 'lucide-react';
+import { FileIcon, DownloadIcon, ImageIcon, FileTextIcon, FileArchiveIcon, MessageSquareIcon } from 'lucide-react';
 import { MediaDetailModal } from './MediaDetailModal';
 
 export const MediaGallery: React.FC = () => {
@@ -23,10 +23,10 @@ export const MediaGallery: React.FC = () => {
                 return <FileTextIcon className="w-4 h-4" />;
             case 'xls':
             case 'xlsx':
-                return <FileSpreadsheetIcon className="w-4 h-4" />;
+                return <FileTextIcon className="w-4 h-4" />;
             case 'ppt':
             case 'pptx':
-                return <Presentation className="w-4 h-4" />;
+                return <FileTextIcon className="w-4 h-4" />;
             case 'psd':
                 return <FileArchiveIcon className="w-4 h-4" />;
             default:
@@ -41,14 +41,7 @@ export const MediaGallery: React.FC = () => {
         return `${(size / (1024 * 1024)).toFixed(1)} MB`;
     };
 
-    // 处理文件下载
-    const handleDownload = (asset: MediaAsset) => {
-        if (asset.downloadUrl) {
-            window.open(asset.downloadUrl, '_blank');
-        } else {
-            window.open(asset.url, '_blank');
-        }
-    };
+
 
     // 处理文件预览
     const handlePreview = (asset: MediaAsset) => {
@@ -81,19 +74,7 @@ export const MediaGallery: React.FC = () => {
         }
     });
 
-    // 检查当前筛选类型是否有可用内容
-    const hasContentForFilterType = () => {
-        switch (filterType) {
-            case 'image':
-                return mediaAssets.some(asset => asset.type === 'image');
-            case 'video':
-                return mediaAssets.some(asset => asset.type === 'video');
-            case 'document':
-                return mediaAssets.some(asset => ['pdf', 'doc', 'docx', 'xls', 'xlsx', 'ppt', 'pptx'].includes(asset.type));
-            default:
-                return mediaAssets.length > 0;
-        }
-    };
+
 
     // 调试日志
     // 获取筛选按钮文本
@@ -254,12 +235,12 @@ export const MediaGallery: React.FC = () => {
                                     <button
                                         onClick={(e) => {
                                             e.stopPropagation();
-                                            handlePreview(asset);
+                                            window.open(asset.downloadUrl || asset.url, '_blank');
                                         }}
                                         className="flex-1 flex items-center justify-center gap-1 px-2 py-1 text-[10px] bg-white/70 hover:bg-white/90 text-foreground rounded-lg border border-white/40 transition-colors"
                                     >
-                                        <ExternalLinkIcon className="w-3 h-3" />
-                                        预览
+                                        <DownloadIcon className="w-3 h-3" />
+                                        下载
                                     </button>
                                     
                                     <button
