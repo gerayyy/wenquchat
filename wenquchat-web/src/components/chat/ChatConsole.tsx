@@ -5,6 +5,8 @@ import { Textarea } from '@/components/ui/textarea';
 import { SendIcon, XIcon, FileIcon, Loader2Icon } from 'lucide-react';
 import { cn } from '@/lib/utils';
 import { sendMessage, convertCozeFileToMediaAsset } from '@/lib/api';
+import ReactMarkdown from 'react-markdown';
+import remarkGfm from 'remark-gfm';
 
 export const ChatConsole: React.FC = () => {
     const { chatHistory, contextFiles, removeContextFile, addMessage, addMediaAsset, clearChat } = useWorkspaceStore();
@@ -168,12 +170,24 @@ export const ChatConsole: React.FC = () => {
                                             : "rounded-tl-sm"
                                     )}
                                 >
-                                    <div className={cn(
-                                        "whitespace-pre-wrap leading-relaxed",
-                                        msg.text === '正在思考中...' && "text-muted-foreground animate-pulse"
-                                    )}>
-                                        {msg.text}
-                                    </div>
+                                    {msg.role === 'assistant' ? (
+                                        <div className={cn(
+                                            "prose prose-sm max-w-none prose-headings:text-foreground prose-p:text-foreground prose-strong:text-foreground prose-em:text-foreground prose-code:text-foreground prose-pre:bg-white/50 prose-pre:text-foreground",
+                                            "whitespace-pre-wrap leading-relaxed",
+                                            msg.text === '正在思考中...' && "text-muted-foreground animate-pulse"
+                                        )}>
+                                            <ReactMarkdown remarkPlugins={[remarkGfm]}>
+                                                {msg.text}
+                                            </ReactMarkdown>
+                                        </div>
+                                    ) : (
+                                        <div className={cn(
+                                            "whitespace-pre-wrap leading-relaxed",
+                                            msg.text === '正在思考中...' && "text-muted-foreground animate-pulse"
+                                        )}>
+                                            {msg.text}
+                                        </div>
+                                    )}
                                 </div>
                                 {msg.role === 'user' && (
                                     <div className="w-6 h-6 rounded-full bg-gradient-to-br from-primary/20 to-purple-500/20 flex items-center justify-center shrink-0 mt-1">

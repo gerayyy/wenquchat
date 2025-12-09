@@ -62,6 +62,7 @@ export interface MediaAsset {
     metadata?: {
         width?: number;
         height?: number;
+        size?: number; // File size in bytes
         duration?: number; // Video duration
         pageCount?: number; // PDF/PPT page count
     };

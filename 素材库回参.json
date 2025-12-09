@@ -137,3 +137,18 @@
   "themeBelonging": "OTHER_TOPIC",
   "industry": ""
 }
+
+
+{
+  "phone_number": "15900804728",
+  "username": "seth17",
+  "password": "Ql307307",
+  "subscription_type": "professional",
+  "subscription_valid_until": "2026-12-09",
+  "monthly_quota": 0,
+  "bonus_quota": 70000,
+  "keyword_group_url": "https://qingflow.com/api/qsource/be70d4cf-944c-4b8f-86c9-7d6813d9f19c",
+  "official_article_url": "https://qingflow.com/api/qsource/30995a31-1d1d-4574-8f94-1f672f69bd7f",
+  "source_article_url": "https://qingflow.com/api/qsource/2d2ac331-8bb8-4c54-bfb7-3d7f5aa57ce6",
+  "review_url": "https://qingflow.com/api/qsource/420e8dfb-3036-4390-885d-ff738885ffc8"
+}

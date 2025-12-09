@@ -90,6 +90,7 @@ export const convertCozeFileToMediaAsset = (cozeFile: CozeFile, messageId: strin
         metadata: {
             width: cozeFile.mediaInfo.width,
             height: cozeFile.mediaInfo.height,
+            size: cozeFile.mediaInfo.size,
         },
         relatedMessageId: messageId
     };

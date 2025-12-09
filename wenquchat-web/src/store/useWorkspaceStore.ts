@@ -34,5 +34,10 @@ export const useWorkspaceStore = create<WorkspaceState>((set) => ({
         ),
     })),
 
-    clearChat: () => set({ chatHistory: [] }),
+    clearChat: () => set({ 
+        chatHistory: [], 
+        mediaAssets: [], 
+        selectedAssetId: null,
+        contextFiles: []
+    }),
 }))
