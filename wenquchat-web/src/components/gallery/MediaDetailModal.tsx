@@ -193,17 +193,17 @@ export const MediaDetailModal: React.FC<MediaDetailModalProps> = ({
                         </div>
 
                         {/* 操作按钮 */}
-                        <div className="mt-6 space-y-2 flex-shrink-0">
+                        <div className="mt-6 flex gap-2 flex-shrink-0">
                             <button
                             onClick={() => onPreview(asset)}
-                            className="flex items-center gap-1 px-2 py-1 text-[10px] bg-blue-600 hover:bg-blue-700 text-white rounded-lg transition-colors"
+                            className="flex-1 flex items-center justify-center gap-1 px-2 py-1 text-[10px] bg-blue-600 hover:bg-blue-700 text-white rounded-lg transition-colors"
                         >
                             <ExternalLinkIcon className="w-3 h-3" />
                             在新窗口打开
                         </button>
                         <button
                             onClick={() => onDownload(asset)}
-                            className="flex items-center gap-1 px-2 py-1 text-[10px] bg-green-600 hover:bg-green-700 text-white rounded-lg transition-colors"
+                            className="flex-1 flex items-center justify-center gap-1 px-2 py-1 text-[10px] bg-green-600 hover:bg-green-700 text-white rounded-lg transition-colors"
                         >
                             <DownloadIcon className="w-3 h-3" />
                             下载文件

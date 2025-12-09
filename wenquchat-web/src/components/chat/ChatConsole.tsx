@@ -238,10 +238,10 @@ export const ChatConsole: React.FC = () => {
                     </div>
                     <div className="flex justify-center">
                         <button
-                            onClick={clearChat}
+                            onClick={() => window.location.reload()}
                             className="text-[10px] text-muted-foreground/60 hover:text-muted-foreground hover:bg-black/5 px-2 py-1 rounded-full transition-colors"
                         >
-                            清空当前对话
+                            重置当前对话
                         </button>
                     </div>
                 </div>
