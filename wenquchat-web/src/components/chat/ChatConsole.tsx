@@ -2,13 +2,14 @@ import React, { useState, useRef, useEffect } from 'react';
 import { useWorkspaceStore } from '@/store/useWorkspaceStore';
 import { Button } from '@/components/ui/button';
 import { Textarea } from '@/components/ui/textarea';
-import { SendIcon, XIcon, FileIcon } from 'lucide-react';
+import { SendIcon, XIcon, FileIcon, Loader2Icon } from 'lucide-react';
 import { cn } from '@/lib/utils';
-import { sendMessage } from '@/lib/api';
+import { sendMessage, convertCozeFileToMediaAsset } from '@/lib/api';
 
 export const ChatConsole: React.FC = () => {
-    const { chatHistory, contextFiles, removeContextFile, addMessage, clearChat } = useWorkspaceStore();
+    const { chatHistory, contextFiles, removeContextFile, addMessage, addMediaAsset, clearChat } = useWorkspaceStore();
     const [inputValue, setInputValue] = useState('');
+    const [isLoading, setIsLoading] = useState(false);
     const scrollRef = useRef<HTMLDivElement>(null);
     const textareaRef = useRef<HTMLTextAreaElement>(null);
 
@@ -34,6 +35,7 @@ export const ChatConsole: React.FC = () => {
 
     const handleSend = async () => {
         if (!inputValue.trim() && contextFiles.length === 0) return;
+        if (isLoading) return; // 防止重复发送
 
         const userMsg = {
             id: Date.now().toString(),
@@ -43,14 +45,68 @@ export const ChatConsole: React.FC = () => {
         };
         addMessage(userMsg);
         setInputValue('');
+        setIsLoading(true);
         
         // 重置文本框高度
         if (textareaRef.current) {
             textareaRef.current.style.height = 'auto';
         }
 
-        // TODO: Call API here
-        sendMessage(inputValue, contextFiles);
+        // 添加等待中的助手消息
+        const tempAssistantMsg = {
+            id: (Date.now() + 1).toString(),
+            role: 'assistant' as const,
+            text: '正在思考中...',
+            timestamp: Date.now() + 1,
+        };
+        addMessage(tempAssistantMsg);
+
+        try {
+            // 调用Coze工作流
+            const workflowData = await sendMessage(inputValue, contextFiles);
+            
+            // 更新助手消息内容
+            const assistantMsg = {
+                id: (Date.now() + 1).toString(),
+                role: 'assistant' as const,
+                text: workflowData.assistant,
+                timestamp: Date.now() + 1,
+            };
+            
+            // 移除临时消息，添加正式消息
+            const updatedHistory = chatHistory.filter(msg => msg.id !== tempAssistantMsg.id);
+            updatedHistory.push(userMsg, assistantMsg);
+            
+            // 清空当前历史并重新添加
+            clearChat();
+            updatedHistory.forEach(msg => addMessage(msg));
+            
+            // 添加媒体资源
+            if (workflowData.file && workflowData.file.length > 0) {
+                workflowData.file.forEach(cozeFile => {
+                    const mediaAsset = convertCozeFileToMediaAsset(cozeFile, assistantMsg.id);
+                    addMediaAsset(mediaAsset);
+                });
+            }
+            
+        } catch (error) {
+            console.error('工作流调用失败:', error);
+            // 更新错误消息
+            const errorMsg = {
+                id: (Date.now() + 1).toString(),
+                role: 'assistant' as const,
+                text: '抱歉，处理您的请求时出现错误。请稍后重试。',
+                timestamp: Date.now() + 1,
+            };
+            
+            const updatedHistory = chatHistory.filter(msg => msg.id !== tempAssistantMsg.id);
+            updatedHistory.push(userMsg, errorMsg);
+            
+            clearChat();
+            updatedHistory.forEach(msg => addMessage(msg));
+        } finally {
+            setIsLoading(false);
+        }
     };
 
     const handleKeyDown = (e: React.KeyboardEvent<HTMLTextAreaElement>) => {
@@ -93,8 +149,15 @@ export const ChatConsole: React.FC = () => {
                         >
                             <div className="flex items-start gap-2 max-w-[85%]">
                                 {msg.role === 'assistant' && (
-                                    <div className="w-6 h-6 rounded-full bg-gradient-to-br from-primary/20 to-purple-500/20 flex items-center justify-center shrink-0 mt-1">
-                                        <SendIcon className="w-3 h-3 text-primary/60 rotate-180" />
+                                    <div className={cn(
+                                        "w-6 h-6 rounded-full bg-gradient-to-br from-primary/20 to-purple-500/20 flex items-center justify-center shrink-0 mt-1",
+                                        msg.text === '正在思考中...' && "animate-pulse"
+                                    )}>
+                                        {msg.text === '正在思考中...' ? (
+                                            <Loader2Icon className="w-3 h-3 text-primary/60 animate-spin" />
+                                        ) : (
+                                            <SendIcon className="w-3 h-3 text-primary/60 rotate-180" />
+                                        )}
                                     </div>
                                 )}
                                 <div
@@ -105,7 +168,12 @@ export const ChatConsole: React.FC = () => {
                                             : "rounded-tl-sm"
                                     )}
                                 >
-                                    <div className="whitespace-pre-wrap leading-relaxed">{msg.text}</div>
+                                    <div className={cn(
+                                        "whitespace-pre-wrap leading-relaxed",
+                                        msg.text === '正在思考中...' && "text-muted-foreground animate-pulse"
+                                    )}>
+                                        {msg.text}
+                                    </div>
                                 </div>
                                 {msg.role === 'user' && (
                                     <div className="w-6 h-6 rounded-full bg-gradient-to-br from-primary/20 to-purple-500/20 flex items-center justify-center shrink-0 mt-1">

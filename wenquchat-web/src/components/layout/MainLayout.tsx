@@ -2,9 +2,11 @@ import React from 'react';
 import { Panel, PanelGroup, PanelResizeHandle } from 'react-resizable-panels';
 import { ChatConsole } from '../chat/ChatConsole';
 import { MediaGallery } from '../gallery/MediaGallery';
-import { UniversalPreviewer } from '../preview/UniversalPreviewer';
 
+// 主布局组件 - 已移除所有预览器相关功能
 export const MainLayout: React.FC = () => {
+    console.log('MainLayout组件 - 预览器功能已完全清除');
+    
     return (
         <div className="h-screen w-screen overflow-hidden p-4 md:p-6 lg:p-8">
             <PanelGroup direction="horizontal" className="gap-4 md:gap-6">
@@ -26,7 +28,7 @@ export const MainLayout: React.FC = () => {
                     </div>
                 </Panel>
             </PanelGroup>
-            <UniversalPreviewer />
+            {/* UniversalPreviewer组件已完全移除 */}
         </div>
     );
 };
