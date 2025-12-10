@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import { useWorkspaceStore } from '@/store/useWorkspaceStore';
 import type { MediaAsset } from '@/types';
-import { FileIcon, DownloadIcon, ImageIcon, FileTextIcon, FileArchiveIcon, MessageSquareIcon } from 'lucide-react';
+import { FileIcon, ImageIcon, FileTextIcon, FileArchiveIcon, MessageSquareIcon, ExternalLinkIcon } from 'lucide-react';
 import { MediaDetailModal } from './MediaDetailModal';
 
 export const MediaGallery: React.FC = () => {
@@ -239,8 +239,8 @@ export const MediaGallery: React.FC = () => {
                                         }}
                                         className="flex-1 flex items-center justify-center gap-1 px-2 py-1 text-[10px] bg-white/70 hover:bg-white/90 text-foreground rounded-lg border border-white/40 transition-colors"
                                     >
-                                        <DownloadIcon className="w-3 h-3" />
-                                        下载
+                                        <ExternalLinkIcon className="w-3 h-3" />
+                                        预览
                                     </button>
                                     
                                     <button

@@ -9,7 +9,7 @@ import ReactMarkdown from 'react-markdown';
 import remarkGfm from 'remark-gfm';
 
 export const ChatConsole: React.FC = () => {
-    const { chatHistory, contextFiles, removeContextFile, addMessage, addMediaAsset, clearChat } = useWorkspaceStore();
+    const { chatHistory, contextFiles, removeContextFile, addMessage, addMediaAsset, clearChatHistoryOnly } = useWorkspaceStore();
     const [inputValue, setInputValue] = useState('');
     const [isLoading, setIsLoading] = useState(false);
     const scrollRef = useRef<HTMLDivElement>(null);
@@ -80,16 +80,33 @@ export const ChatConsole: React.FC = () => {
             const updatedHistory = chatHistory.filter(msg => msg.id !== tempAssistantMsg.id);
             updatedHistory.push(userMsg, assistantMsg);
             
-            // 清空当前历史并重新添加
-            clearChat();
+            // 只清空聊天历史，保留知识看板卡片
+            clearChatHistoryOnly();
             updatedHistory.forEach(msg => addMessage(msg));
             
-            // 添加媒体资源
+            // 添加媒体资源 - 只处理有效的文件对象
             if (workflowData.file && workflowData.file.length > 0) {
-                workflowData.file.forEach(cozeFile => {
-                    const mediaAsset = convertCozeFileToMediaAsset(cozeFile, assistantMsg.id);
-                    addMediaAsset(mediaAsset);
+                const validFiles = workflowData.file.filter(file => {
+                    // 检查文件对象是否有效（不是空对象）
+                    return file && Object.keys(file).length > 0 && file.materialId;
                 });
+                
+                console.log('过滤后的有效文件:', validFiles);
+                console.log('原始文件数组:', workflowData.file);
+                
+                if (validFiles.length > 0) {
+                    validFiles.forEach(cozeFile => {
+                        try {
+                            const mediaAsset = convertCozeFileToMediaAsset(cozeFile, assistantMsg.id);
+                            addMediaAsset(mediaAsset);
+                        } catch (fileError) {
+                            console.error('转换文件失败:', fileError, cozeFile);
+                            // 单个文件转换失败不影响整体流程
+                        }
+                    });
+                } else {
+                    console.log('没有有效的文件需要处理');
+                }
             }
             
         } catch (error) {
@@ -105,7 +122,7 @@ export const ChatConsole: React.FC = () => {
             const updatedHistory = chatHistory.filter(msg => msg.id !== tempAssistantMsg.id);
             updatedHistory.push(userMsg, errorMsg);
             
-            clearChat();
+            clearChatHistoryOnly();
             updatedHistory.forEach(msg => addMessage(msg));
         } finally {
             setIsLoading(false);

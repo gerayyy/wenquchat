@@ -9,28 +9,28 @@ export const useWorkspaceStore = create<WorkspaceState>((set) => ({
     contextFiles: [],
 
     // 空操作函数
-    addMessage: (_message: Message) => set((state) => ({
-        chatHistory: [...state.chatHistory, _message]
+    addMessage: (message: Message) => set((state) => ({
+        chatHistory: [...state.chatHistory, message]
     })),
 
-    addMediaAsset: (_asset: MediaAsset) => set((state) => ({
-        mediaAssets: [...state.mediaAssets, _asset]
+    addMediaAsset: (asset: MediaAsset) => set((state) => ({
+        mediaAssets: [...state.mediaAssets, asset]
     })),
 
-    setSelectedAssetId: (_id: string | null) => set({ selectedAssetId: _id }),
+    setSelectedAssetId: (id: string | null) => set({ selectedAssetId: id }),
 
-    addContextFile: (_asset: MediaAsset) => set((state) => {
-        if (state.contextFiles.some(f => f.id === _asset.id)) return state;
-        return { contextFiles: [...state.contextFiles, _asset] };
+    addContextFile: (asset: MediaAsset) => set(() => {
+        // 仅保留一个文件，新插入的文件会替换前一个
+        return { contextFiles: [asset] };
     }),
 
-    removeContextFile: (_assetId: string) => set((state) => ({
-        contextFiles: state.contextFiles.filter(f => f.id !== _assetId)
+    removeContextFile: (assetId: string) => set((state) => ({
+        contextFiles: state.contextFiles.filter(f => f.id !== assetId)
     })),
 
-    updateMessage: (_id: string, _updates: Partial<Message>) => set((state) => ({
+    updateMessage: (id: string, updates: Partial<Message>) => set((state) => ({
         chatHistory: state.chatHistory.map((msg) =>
-            msg.id === _id ? { ...msg, ..._updates } : msg
+            msg.id === id ? { ...msg, ...updates } : msg
         ),
     })),
 
@@ -39,5 +39,13 @@ export const useWorkspaceStore = create<WorkspaceState>((set) => ({
         mediaAssets: [], 
         selectedAssetId: null,
         contextFiles: []
+    }),
+    
+    // 只清空聊天历史，保留媒体资源（知识看板卡片）
+    clearChatHistoryOnly: () => set({ 
+        chatHistory: [], 
+        selectedAssetId: null,
+        contextFiles: []
+        // 注意：不清空 mediaAssets，保留知识看板卡片
     }),
 }))

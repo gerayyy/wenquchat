@@ -23,33 +23,35 @@ export interface CozeWorkflowData {
 }
 
 export interface CozeFile {
-    createTime: string;
-    creator: string;
-    custom: string;
-    description: {
-        color: string;
-        elements: string;
-        festivalInfo: string;
-        theme: string;
+    createTime?: string;
+    creator?: string;
+    custom?: string;
+    description?: {
+        color?: string;
+        elements?: string;
+        festivalInfo?: string;
+        theme?: string;
+        summary?: string;
     };
-    materialId: string;
-    materialName: string;
-    materialType: string;
-    mediaInfo: {
-        cover: string;
-        format: string;
-        height: number;
-        size: number;
-        url: string;
-        width: number;
+    materialId?: string;
+    materialName?: string;
+    materialType?: string; // 改为可选字段，某些情况下可能缺失
+    mediaInfo?: {
+        cover?: string;
+        format?: string;
+        height?: number;
+        size?: number;
+        url?: string;
+        width?: number;
+        duration?: number;
     };
-    project: string;
+    project?: string;
     sourceFiles?: {
         filename: string;
         url: string;
     }[];
-    tags: string[];
-    usageType: string;
+    tags?: string[];
+    usageType?: string;
 }
 
 export interface MediaAsset {
@@ -65,8 +67,44 @@ export interface MediaAsset {
         size?: number; // File size in bytes
         duration?: number; // Video duration
         pageCount?: number; // PDF/PPT page count
+        format?: string; // 文件格式
+        cover?: string; // 封面图片URL
+        fps?: number; // 视频帧率
     };
     relatedMessageId: string; // Associated AI response ID
+    // 扩展文件信息（基于接口文档）
+    description?: {
+        color?: string; // 主色调描述
+        elements?: string; // 元素描述
+        festivalInfo?: string; // 节日标签
+        theme?: string; // 主题描述
+    };
+    summary?: string; // 摘要
+    tags?: string[]; // 标签列表
+    project?: string; // 项目名称
+    usageType?: string; // 用途类型
+    createTime?: string; // 创建时间
+    updateTime?: string; // 更新时间
+    createBy?: string; // 创建者
+    updateBy?: string; // 更新者
+    status?: string; // 生命周期状态
+    simHash?: string; // 去重哈希
+    score?: number; // 相关性得分
+    themeBelonging?: string; // 主题归属
+    user?: { // 上传者信息
+        name: string;
+        userId: string;
+        avatar?: string | null;
+    };
+    sourceFiles?: { // 关联文件列表
+        filename: string;
+        url: string;
+    }[];
+    // 新增字段
+    materialId?: string; // 素材ID
+    custom?: string; // 自定义信息
+    transcodeStatus?: number; // 转码状态 (0:成功, 1:处理中, 2:失败)
+    vectorStatus?: number; // 向量状态 (0:未生成, 1:已生成, 2:失败)
 }
 
 export interface Message {
@@ -88,5 +126,6 @@ export interface WorkspaceState {
     addContextFile: (asset: MediaAsset) => void;
     removeContextFile: (assetId: string) => void;
     clearChat: () => void;
+    clearChatHistoryOnly: () => void;
     updateMessage: (id: string, updates: Partial<Message>) => void;
 }

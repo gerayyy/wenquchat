@@ -197,6 +197,34 @@ export const MediaDetailModal: React.FC<MediaDetailModalProps> = ({
                         <h3 className="text-lg font-semibold text-gray-900 mb-4 flex-shrink-0">文件信息</h3>
                         
                         <div className="space-y-4 flex-1 overflow-y-auto">
+                            {/* 文件标识 */}
+                            {(asset.id || asset.materialId) && (
+                                <div className="bg-white rounded-lg p-4 border border-gray-200">
+                                    <h4 className="text-sm font-medium text-gray-700 mb-3">文件标识</h4>
+                                    <div className="space-y-2 text-sm">
+                                        {asset.materialId && (
+                                            <div className="flex justify-between">
+                                                <span className="text-gray-500">素材ID:</span>
+                                                <span className="text-gray-900 text-xs font-mono truncate max-w-32">{asset.materialId}</span>
+                                            </div>
+                                        )}
+                                        {asset.id && (
+                                            <div className="flex justify-between">
+                                                <span className="text-gray-500">资源ID:</span>
+                                                <span className="text-gray-900 text-xs font-mono truncate max-w-32">{asset.id}</span>
+                                            </div>
+                                        )}
+                                        {asset.simHash && (
+                                            <div className="flex justify-between">
+                                                <span className="text-gray-500">去重哈希:</span>
+                                                <span className="text-gray-900 text-xs font-mono truncate max-w-32">{asset.simHash}</span>
+                                            </div>
+                                        )}
+                                    </div>
+                                </div>
+                            )}
+
+                            {/* 基本信息 */}
                             <div className="bg-white rounded-lg p-4 border border-gray-200">
                                 <h4 className="text-sm font-medium text-gray-700 mb-3">基本信息</h4>
                                 <div className="space-y-2 text-sm">
@@ -210,7 +238,7 @@ export const MediaDetailModal: React.FC<MediaDetailModalProps> = ({
                                     </div>
                                     <div className="flex justify-between">
                                         <span className="text-gray-500">MIME类型:</span>
-                                        <span className="text-gray-900 text-xs">{asset.mimeType}</span>
+                                        <span className="text-gray-900 text-xs font-mono">{asset.mimeType}</span>
                                     </div>
                                     {asset.metadata?.size && (
                                         <div className="flex justify-between">
@@ -218,10 +246,68 @@ export const MediaDetailModal: React.FC<MediaDetailModalProps> = ({
                                             <span className="text-gray-900">{formatFileSize(asset.metadata.size)}</span>
                                         </div>
                                     )}
+                                    {asset.metadata?.format && (
+                                        <div className="flex justify-between">
+                                            <span className="text-gray-500">文件格式:</span>
+                                            <span className="text-gray-900">{asset.metadata.format}</span>
+                                        </div>
+                                    )}
+                                    {asset.usageType && (
+                                        <div className="flex justify-between">
+                                            <span className="text-gray-500">用途类型:</span>
+                                            <span className="text-gray-900">{asset.usageType}</span>
+                                        </div>
+                                    )}
+                                    {asset.project && (
+                                        <div className="flex justify-between">
+                                            <span className="text-gray-500">所属项目:</span>
+                                            <span className="text-gray-900">{asset.project}</span>
+                                        </div>
+                                    )}
+                                    {asset.custom && (
+                                        <div className="flex justify-between">
+                                            <span className="text-gray-500">自定义:</span>
+                                            <span className="text-gray-900">{asset.custom}</span>
+                                        </div>
+                                    )}
+                                    {asset.status && (
+                                        <div className="flex justify-between">
+                                            <span className="text-gray-500">状态:</span>
+                                            <span className="text-gray-900">{asset.status}</span>
+                                        </div>
+                                    )}
                                 </div>
                             </div>
 
-                            {asset.metadata && (asset.metadata.width || asset.metadata.height) && (
+                            {/* 创建信息 */}
+                            {(asset.createBy || asset.user || asset.createTime) && (
+                                <div className="bg-white rounded-lg p-4 border border-gray-200">
+                                    <h4 className="text-sm font-medium text-gray-700 mb-3">创建信息</h4>
+                                    <div className="space-y-2 text-sm">
+                                        {asset.user && (
+                                            <div className="flex justify-between">
+                                                <span className="text-gray-500">上传者:</span>
+                                                <span className="text-gray-900">{asset.user.name}</span>
+                                            </div>
+                                        )}
+                                        {asset.createBy && (
+                                            <div className="flex justify-between">
+                                                <span className="text-gray-500">创建者:</span>
+                                                <span className="text-gray-900">{asset.createBy}</span>
+                                            </div>
+                                        )}
+                                        {asset.createTime && (
+                                            <div className="flex justify-between">
+                                                <span className="text-gray-500">创建时间:</span>
+                                                <span className="text-gray-900">{new Date(asset.createTime).toLocaleString('zh-CN')}</span>
+                                            </div>
+                                        )}
+                                    </div>
+                                </div>
+                            )}
+
+                            {/* 媒体信息 */}
+                            {asset.metadata && (asset.metadata.width || asset.metadata.height || asset.metadata.duration || asset.metadata.pageCount || asset.metadata.cover || asset.metadata.fps) && (
                                 <div className="bg-white rounded-lg p-4 border border-gray-200">
                                     <h4 className="text-sm font-medium text-gray-700 mb-3">媒体信息</h4>
                                     <div className="space-y-2 text-sm">
@@ -237,26 +323,196 @@ export const MediaDetailModal: React.FC<MediaDetailModalProps> = ({
                                                 <span className="text-gray-900">{Math.floor(asset.metadata.duration / 60)}:{(asset.metadata.duration % 60).toString().padStart(2, '0')}</span>
                                             </div>
                                         )}
+                                        {asset.metadata.fps && asset.metadata.fps > 0 && (
+                                            <div className="flex justify-between">
+                                                <span className="text-gray-500">帧率:</span>
+                                                <span className="text-gray-900">{asset.metadata.fps} fps</span>
+                                            </div>
+                                        )}
                                         {asset.metadata.pageCount && (
                                             <div className="flex justify-between">
                                                 <span className="text-gray-500">页数:</span>
                                                 <span className="text-gray-900">{asset.metadata.pageCount} 页</span>
                                             </div>
                                         )}
+                                        {asset.metadata.cover && (
+                                            <div>
+                                                <div className="flex justify-between mb-2">
+                                                    <span className="text-gray-500">封面图:</span>
+                                                </div>
+                                                <img 
+                                                    src={asset.metadata.cover} 
+                                                    alt="封面预览"
+                                                    className="w-full h-20 object-cover rounded border cursor-pointer hover:opacity-80 transition-opacity"
+                                                    onClick={() => window.open(asset.metadata?.cover, '_blank')}
+                                                />
+                                            </div>
+                                        )}
                                     </div>
                                 </div>
                             )}
 
+                            {/* 描述信息 */}
+                            {asset.description && (asset.description.theme || asset.description.color || asset.description.festivalInfo || asset.description.elements) && (
+                                <div className="bg-white rounded-lg p-4 border border-gray-200">
+                                    <h4 className="text-sm font-medium text-gray-700 mb-3">描述信息</h4>
+                                    <div className="space-y-3 text-sm">
+                                        {asset.description.theme && (
+                                            <div>
+                                                <span className="text-gray-500 font-medium">主题:</span>
+                                                <p className="text-gray-900 mt-1">{asset.description.theme}</p>
+                                            </div>
+                                        )}
+                                        {asset.description.color && (
+                                            <div>
+                                                <span className="text-gray-500 font-medium">主色调:</span>
+                                                <p className="text-gray-900 mt-1">{asset.description.color}</p>
+                                            </div>
+                                        )}
+                                        {asset.description.festivalInfo && (
+                                            <div>
+                                                <span className="text-gray-500 font-medium">节日标签:</span>
+                                                <p className="text-gray-900 mt-1">{asset.description.festivalInfo}</p>
+                                            </div>
+                                        )}
+                                        {asset.description.elements && (
+                                            <div>
+                                                <span className="text-gray-500 font-medium">元素:</span>
+                                                <p className="text-gray-900 mt-1">{asset.description.elements}</p>
+                                            </div>
+                                        )}
+                                    </div>
+                                </div>
+                            )}
+
+                            {/* 摘要 */}
+                            {asset.summary && (
+                                <div className="bg-white rounded-lg p-4 border border-gray-200">
+                                    <h4 className="text-sm font-medium text-gray-700 mb-3">摘要</h4>
+                                    <p className="text-sm text-gray-900">{asset.summary}</p>
+                                </div>
+                            )}
+
+                            {/* 标签 */}
+                            {asset.tags && asset.tags.length > 0 && (
+                                <div className="bg-white rounded-lg p-4 border border-gray-200">
+                                    <h4 className="text-sm font-medium text-gray-700 mb-3">标签</h4>
+                                    <div className="flex flex-wrap gap-2">
+                                        {asset.tags.map((tag, index) => (
+                                            <span key={index} className="px-2 py-1 bg-blue-100 text-blue-800 text-xs rounded-full">
+                                                {tag}
+                                            </span>
+                                        ))}
+                                    </div>
+                                </div>
+                            )}
+
+                            {/* 时间信息 */}
+                            {(asset.createTime || asset.updateTime) && (
+                                <div className="bg-white rounded-lg p-4 border border-gray-200">
+                                    <h4 className="text-sm font-medium text-gray-700 mb-3">时间信息</h4>
+                                    <div className="space-y-2 text-sm">
+                                        {asset.createTime && (
+                                            <div className="flex justify-between">
+                                                <span className="text-gray-500">创建时间:</span>
+                                                <span className="text-gray-900">{new Date(asset.createTime).toLocaleString('zh-CN')}</span>
+                                            </div>
+                                        )}
+                                        {asset.updateTime && (
+                                            <div className="flex justify-between">
+                                                <span className="text-gray-500">更新时间:</span>
+                                                <span className="text-gray-900">{new Date(asset.updateTime).toLocaleString('zh-CN')}</span>
+                                            </div>
+                                        )}
+                                    </div>
+                                </div>
+                            )}
+
+                            {/* 关联文件 */}
+                            {asset.sourceFiles && asset.sourceFiles.length > 0 && (
+                                <div className="bg-white rounded-lg p-4 border border-gray-200">
+                                    <h4 className="text-sm font-medium text-gray-700 mb-3">关联文件</h4>
+                                    <div className="space-y-2">
+                                        {asset.sourceFiles.map((file, index) => (
+                                            <div key={index} className="flex items-center justify-between p-2 bg-gray-50 rounded-lg">
+                                                <span className="text-sm text-gray-900 truncate flex-1">{file.filename}</span>
+                                                <button
+                                                    onClick={() => window.open(file.url, '_blank')}
+                                                    className="ml-2 px-2 py-1 text-xs bg-blue-100 text-blue-700 rounded hover:bg-blue-200 transition-colors"
+                                                >
+                                                    打开
+                                                </button>
+                                            </div>
+                                        ))}
+                                    </div>
+                                </div>
+                            )}
+
+                            {/* 评分与分析 */}
+                            {(asset.score || asset.themeBelonging) && (
+                                <div className="bg-white rounded-lg p-4 border border-gray-200">
+                                    <h4 className="text-sm font-medium text-gray-700 mb-3">评分与分析</h4>
+                                    <div className="space-y-2 text-sm">
+                                        {asset.score && (
+                                            <div className="flex justify-between">
+                                                <span className="text-gray-500">相关性得分:</span>
+                                                <span className="text-gray-900 font-medium">{asset.score.toFixed(3)}</span>
+                                            </div>
+                                        )}
+                                        {asset.themeBelonging && (
+                                            <div className="flex justify-between">
+                                                <span className="text-gray-500">主题归属:</span>
+                                                <span className="text-gray-900">{asset.themeBelonging}</span>
+                                            </div>
+                                        )}
+                                    </div>
+                                </div>
+                            )}
+
+                            {/* 技术信息 */}
+                            {(asset.transcodeStatus !== undefined || asset.vectorStatus !== undefined) && (
+                                <div className="bg-white rounded-lg p-4 border border-gray-200">
+                                    <h4 className="text-sm font-medium text-gray-700 mb-3">技术信息</h4>
+                                    <div className="space-y-2 text-sm">
+                                        {asset.transcodeStatus !== undefined && (
+                                            <div className="flex justify-between">
+                                                <span className="text-gray-500">转码状态:</span>
+                                                <span className={`px-2 py-1 rounded-full text-xs ${
+                                                    asset.transcodeStatus === 0 ? 'bg-green-100 text-green-800' : 
+                                                    asset.transcodeStatus === 1 ? 'bg-yellow-100 text-yellow-800' : 'bg-red-100 text-red-800'
+                                                }`}>
+                                                    {asset.transcodeStatus === 0 ? '成功' : 
+                                                     asset.transcodeStatus === 1 ? '处理中' : '失败'}
+                                                </span>
+                                            </div>
+                                        )}
+                                        {asset.vectorStatus !== undefined && (
+                                            <div className="flex justify-between">
+                                                <span className="text-gray-500">向量状态:</span>
+                                                <span className={`px-2 py-1 rounded-full text-xs ${
+                                                    asset.vectorStatus === 1 ? 'bg-green-100 text-green-800' : 
+                                                    asset.vectorStatus === 0 ? 'bg-yellow-100 text-yellow-800' : 'bg-red-100 text-red-800'
+                                                }`}>
+                                                    {asset.vectorStatus === 1 ? '已生成' : 
+                                                     asset.vectorStatus === 0 ? '未生成' : '失败'}
+                                                </span>
+                                            </div>
+                                        )}
+                                    </div>
+                                </div>
+                            )}
+
+                            {/* 关联信息 */}
                             <div className="bg-white rounded-lg p-4 border border-gray-200">
                                 <h4 className="text-sm font-medium text-gray-700 mb-3">关联信息</h4>
                                 <div className="space-y-2 text-sm">
                                     <div className="flex justify-between">
                                         <span className="text-gray-500">消息ID:</span>
-                                        <span className="text-gray-900 text-xs font-mono">{asset.relatedMessageId}</span>
+                                        <span className="text-gray-900 text-xs font-mono truncate max-w-32">{asset.relatedMessageId}</span>
                                     </div>
                                     <div className="flex justify-between">
                                         <span className="text-gray-500">资源ID:</span>
-                                        <span className="text-gray-900 text-xs font-mono">{asset.id}</span>
+                                        <span className="text-gray-900 text-xs font-mono truncate max-w-32">{asset.id}</span>
                                     </div>
                                 </div>
                             </div>
