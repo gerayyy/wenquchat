@@ -2,7 +2,7 @@ import type { MediaAsset, CozeWorkflowResponse, CozeWorkflowData, CozeFile } fro
 
 // Coze API 配置
 const COZE_API_URL = 'https://api.coze.cn/v1/workflow/run';
-const COZE_ACCESS_TOKEN = 'sat_9BUBsxwQjCwOY6Q5WII1hAc4viAlEWFABoOq7HBRApnHi34ltK83SvNrknSfRRQM'; // 需要替换为实际的token
+const COZE_ACCESS_TOKEN = 'sat_Eb3FXTSWU64iIYlj9sgRQAa2tg0C97O8BQTiMAyuPpfH7L6HUdjzgCfQQuLrlRlr'; // 需要替换为实际的token
 const COZE_WORKFLOW_ID = '7581788520839266346'; // 使用示例中的工作流ID
 
 /**
