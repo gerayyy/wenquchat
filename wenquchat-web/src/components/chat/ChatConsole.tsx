@@ -9,7 +9,7 @@ import ReactMarkdown from 'react-markdown';
 import remarkGfm from 'remark-gfm';
 
 export const ChatConsole: React.FC = () => {
-    const { chatHistory, contextFiles, removeContextFile, addMessage, addMediaAsset, clearChatHistoryOnly } = useWorkspaceStore();
+    const { chatHistory, contextFiles, removeContextFile, addMessage, addMediaAsset, clearChatHistoryOnly, clearMediaAssets } = useWorkspaceStore();
     const [inputValue, setInputValue] = useState('');
     const [isLoading, setIsLoading] = useState(false);
     const scrollRef = useRef<HTMLDivElement>(null);
@@ -95,6 +95,9 @@ export const ChatConsole: React.FC = () => {
                 console.log('原始文件数组:', workflowData.file);
                 
                 if (validFiles.length > 0) {
+                    // 先清空原有媒体资源，再添加新的卡片信息
+                    clearMediaAssets();
+                    
                     validFiles.forEach(cozeFile => {
                         try {
                             const mediaAsset = convertCozeFileToMediaAsset(cozeFile, assistantMsg.id);

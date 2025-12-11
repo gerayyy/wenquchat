@@ -48,4 +48,10 @@ export const useWorkspaceStore = create<WorkspaceState>((set) => ({
         contextFiles: []
         // 注意：不清空 mediaAssets，保留知识看板卡片
     }),
+
+    // 清空媒体资源（知识看板卡片）
+    clearMediaAssets: () => set({ 
+        mediaAssets: [], 
+        selectedAssetId: null
+    }),
 }))

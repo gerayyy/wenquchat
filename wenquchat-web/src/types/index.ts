@@ -127,5 +127,6 @@ export interface WorkspaceState {
     removeContextFile: (assetId: string) => void;
     clearChat: () => void;
     clearChatHistoryOnly: () => void;
+    clearMediaAssets: () => void;
     updateMessage: (id: string, updates: Partial<Message>) => void;
 }
