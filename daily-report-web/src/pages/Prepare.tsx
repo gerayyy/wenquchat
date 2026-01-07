@@ -63,8 +63,8 @@ export function Prepare() {
 
                 <div className="space-y-4 pt-4 border-t border-white/10">
                     <label className="text-sm font-medium text-white/80 uppercase tracking-wider">新客户</label>
-                    <div className="flex items-center gap-4">
-                        <div className="relative flex-1 max-w-[200px]">
+                    <div className="flex flex-col sm:flex-row items-start sm:items-center gap-2 sm:gap-4">
+                        <div className="relative flex-1 w-full">
                             <Input
                                     type="number"
                                     min="1"
@@ -84,6 +84,7 @@ export function Prepare() {
                                         }
                                     }}
                                     className="pl-10"
+                                    style={{ textIndent: '8px' }} // 确保数字输入时可见
                                 />
                             <Plus className="absolute left-3 top-1/2 -translate-y-1/2 w-4 h-4 text-white/50" />
                         </div>
