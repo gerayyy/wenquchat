@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import { Button } from '../ui/button';
 import { Input } from '../ui/input';
-import { CardContent, CardHeader, CardTitle } from '../ui/card';
+import { CardContent } from '../ui/card';
 
 interface PreparationPageProps {
   onNext: () => void;
@@ -53,11 +53,6 @@ export const PreparationPage: React.FC<PreparationPageProps> = ({ onNext }) => {
 
   return (
     <div className="animate-in slide-in-from-bottom-2">
-      <CardHeader className="mb-8">
-        <CardTitle className="text-3xl font-bold bg-gradient-to-r from-primary to-secondary bg-clip-text text-transparent tracking-tight">
-          日报提交准备
-        </CardTitle>
-      </CardHeader>
       <CardContent>
         <div className="space-y-10">
           {/* 客户选择区域 */}
@@ -100,7 +95,7 @@ export const PreparationPage: React.FC<PreparationPageProps> = ({ onNext }) => {
           <div className="pt-6">
             <Button 
               onClick={handleSubmit}
-              className="w-full lg:w-auto text-lg py-4 px-10 rounded-2xl shadow-lg hover:shadow-xl transform hover:scale-105 hover:-translate-y-1 transition-all duration-300 font-semibold"
+              className="w-full text-lg py-4 px-10 rounded-2xl bg-gradient-to-r from-purple-500 to-purple-700 text-white shadow-lg hover:shadow-xl hover:from-purple-600 hover:to-purple-800 transform hover:scale-105 transition-all duration-300 font-semibold border-0"
             >
               进入日报填写
             </Button>
