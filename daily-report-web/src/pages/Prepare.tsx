@@ -10,7 +10,7 @@ import { cn } from '../lib/utils';
 export function Prepare() {
     const navigate = useNavigate();
     const [selectedClientIds, setSelectedClientIds] = useState<string[]>([]);
-    const [newClientCount, setNewClientCount] = useState<number>(0);
+    const [newClientCount, setNewClientCount] = useState<number | string>('');
 
     const toggleClient = (id: string) => {
         setSelectedClientIds(prev =>
@@ -22,7 +22,7 @@ export function Prepare() {
         navigate('/fill', {
             state: {
                 selectedClientIds,
-                newClientCount
+                newClientCount: typeof newClientCount === 'string' ? 0 : newClientCount
             }
         });
     };
@@ -66,12 +66,25 @@ export function Prepare() {
                     <div className="flex items-center gap-4">
                         <div className="relative flex-1 max-w-[200px]">
                             <Input
-                                type="number"
-                                min="0"
-                                value={newClientCount}
-                                onChange={(e) => setNewClientCount(Math.max(0, parseInt(e.target.value) || 0))}
-                                className="pl-10"
-                            />
+                                    type="number"
+                                    min="1"
+                                    max="5"
+                                    value={newClientCount}
+                                    onChange={(e) => {
+                                        const value = e.target.value;
+                                        // 允许空输入
+                                        if (value === '') {
+                                            setNewClientCount('');
+                                            return;
+                                        }
+                                        // 只接受1-5之间的数字
+                                        const num = parseInt(value);
+                                        if (!isNaN(num) && num >= 1 && num <= 5) {
+                                            setNewClientCount(num);
+                                        }
+                                    }}
+                                    className="pl-10"
+                                />
                             <Plus className="absolute left-3 top-1/2 -translate-y-1/2 w-4 h-4 text-white/50" />
                         </div>
                         <span className="text-sm text-white/50">位客户访问</span>
