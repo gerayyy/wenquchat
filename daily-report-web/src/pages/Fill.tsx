@@ -5,6 +5,7 @@ import { Button } from '../components/ui/Button';
 import { Card } from '../components/ui/Card';
 import { Textarea } from '../components/ui/Textarea';
 import { Input } from '../components/ui/Input';
+import { AutoResizeInput } from '../components/ui/AutoResizeInput';
 import { Send, AlertCircle } from 'lucide-react';
 
 interface LocationState {
@@ -69,35 +70,35 @@ export function Fill() {
                                 <h4 className="text-sm font-semibold text-white/90 mb-2">基本信息</h4>
                                 <div className="flex flex-wrap items-center gap-1 text-xs">
                                     <span className="text-white/70">客户属于</span>
-                                    <Input value={client.industry} className="inline-flex h-8 px-2 text-xs min-w-[2ch]" style={{ width: 'auto', minWidth: '2ch' }} />
+                                    <AutoResizeInput defaultValue={client.industry} placeholder="行业" />
                                     <span className="text-white/70">行业；对接人为</span>
-                                    <Input value={client.contactPerson} className="inline-flex h-8 px-2 text-xs min-w-[2ch]" style={{ width: 'auto', minWidth: '2ch' }} />
+                                    <AutoResizeInput defaultValue={client.contactPerson} placeholder="对接人" />
                                     <span className="text-white/70">；属于</span>
-                                    <Input value={client.department} className="inline-flex h-8 px-2 text-xs min-w-[2ch]" style={{ width: 'auto', minWidth: '2ch' }} />
+                                    <AutoResizeInput defaultValue={client.department} placeholder="部门" />
                                     <span className="text-white/70">部门；base 在</span>
-                                    <Input value={client.base} className="inline-flex h-8 px-2 text-xs min-w-[2ch]" style={{ width: 'auto', minWidth: '2ch' }} />
+                                    <AutoResizeInput defaultValue={client.base} placeholder="所在地" />
                                     <span className="text-white/70">；联系方式为</span>
-                                    <Input value={client.contactInfo} className="inline-flex h-8 px-2 text-xs min-w-[2ch]" style={{ width: 'auto', minWidth: '2ch' }} />
+                                    <AutoResizeInput defaultValue={client.contactInfo} placeholder="联系方式" />
                                     <span className="text-white/70">；微信号为</span>
-                                    <Input value={client.wechat} className="inline-flex h-8 px-2 text-xs min-w-[2ch]" style={{ width: 'auto', minWidth: '2ch' }} />
+                                    <AutoResizeInput defaultValue={client.wechat} placeholder="微信号" />
                                     <span className="text-white/70">；入库时间为</span>
-                                    <Input value={client.entryDate} className="inline-flex h-8 px-2 text-xs min-w-[2ch]" style={{ width: 'auto', minWidth: '2ch' }} />
+                                    <AutoResizeInput defaultValue={client.entryDate} placeholder="YYYY-MM-DD" />
                                     <span className="text-white/70">；联系上客户：</span>
-                                    <Input value={client.contacted ? '是' : '否'} className="inline-flex h-8 px-2 text-xs min-w-[2ch]" style={{ width: 'auto', minWidth: '2ch' }} />
+                                    <AutoResizeInput defaultValue={client.contacted ? '是' : '否'} placeholder="是/否" />
                                     <span className="text-white/70">；已合作：</span>
-                                    <Input value={client.cooperated ? '是' : '否'} className="inline-flex h-8 px-2 text-xs min-w-[2ch]" style={{ width: 'auto', minWidth: '2ch' }} />
+                                    <AutoResizeInput defaultValue={client.cooperated ? '是' : '否'} placeholder="是/否" />
                                     <span className="text-white/70">；有商机：</span>
-                                    <Input value={client.hasBusiness ? '是' : '否'} className="inline-flex h-8 px-2 text-xs min-w-[2ch]" style={{ width: 'auto', minWidth: '2ch' }} />
+                                    <AutoResizeInput defaultValue={client.hasBusiness ? '是' : '否'} placeholder="是/否" />
                                     <span className="text-white/70">；预计签单时间：</span>
-                                    <Input value={client.expectedSignDate} className="inline-flex h-8 px-2 text-xs min-w-[2ch]" style={{ width: 'auto', minWidth: '2ch' }} />
+                                    <AutoResizeInput defaultValue={client.expectedSignDate} placeholder="YYYY-MM-DD" />
                                     <span className="text-white/70">；商机属性：</span>
-                                    <Input value={client.businessAttribute} className="inline-flex h-8 px-2 text-xs min-w-[2ch]" style={{ width: 'auto', minWidth: '2ch' }} />
+                                    <AutoResizeInput defaultValue={client.businessAttribute} placeholder="商机属性" />
                                     <span className="text-white/70">；项目类别：</span>
-                                    <Input value={client.projectCategory} className="inline-flex h-8 px-2 text-xs min-w-[2ch]" style={{ width: 'auto', minWidth: '2ch' }} />
+                                    <AutoResizeInput defaultValue={client.projectCategory} placeholder="项目类别" />
                                     <span className="text-white/70">；预计商机金额：</span>
-                                    <Input value={client.expectedAmount} className="inline-flex h-8 px-2 text-xs min-w-[2ch]" style={{ width: 'auto', minWidth: '2ch' }} />
+                                    <AutoResizeInput defaultValue={client.expectedAmount} placeholder="金额" />
                                     <span className="text-white/70">；商机状态：</span>
-                                    <Input value={client.businessStatus} className="inline-flex h-8 px-2 text-xs min-w-[2ch]" style={{ width: 'auto', minWidth: '2ch' }} />
+                                    <AutoResizeInput defaultValue={client.businessStatus} placeholder="商机状态" />
                                 </div>
                             </div>
                             <div className="space-y-2">
@@ -127,37 +128,37 @@ export function Fill() {
                         <div>
                             <h4 className="text-sm font-semibold text-white/90 mb-2">基本信息</h4>
                             <div className="flex flex-wrap items-center gap-1 text-xs">
-                                    <span className="text-white/70">客户属于</span>
-                                    <Input placeholder="行业" className="inline-flex h-8 px-2 text-xs min-w-[2ch]" style={{ width: 'auto', minWidth: '2ch' }} />
-                                    <span className="text-white/70">行业；对接人为</span>
-                                    <Input placeholder="对接人" className="inline-flex h-8 px-2 text-xs min-w-[2ch]" style={{ width: 'auto', minWidth: '2ch' }} />
-                                    <span className="text-white/70">；属于</span>
-                                    <Input placeholder="部门" className="inline-flex h-8 px-2 text-xs min-w-[2ch]" style={{ width: 'auto', minWidth: '2ch' }} />
-                                    <span className="text-white/70">部门；base 在</span>
-                                    <Input placeholder="所在地" className="inline-flex h-8 px-2 text-xs min-w-[2ch]" style={{ width: 'auto', minWidth: '2ch' }} />
-                                    <span className="text-white/70">；联系方式为</span>
-                                    <Input placeholder="联系方式" className="inline-flex h-8 px-2 text-xs min-w-[2ch]" style={{ width: 'auto', minWidth: '2ch' }} />
-                                    <span className="text-white/70">；微信号为</span>
-                                    <Input placeholder="微信号" className="inline-flex h-8 px-2 text-xs min-w-[2ch]" style={{ width: 'auto', minWidth: '2ch' }} />
-                                    <span className="text-white/70">；入库时间为</span>
-                                    <Input placeholder="YYYY-MM-DD" className="inline-flex h-8 px-2 text-xs min-w-[2ch]" style={{ width: 'auto', minWidth: '2ch' }} />
-                                    <span className="text-white/70">；联系上客户：</span>
-                                    <Input placeholder="是/否" className="inline-flex h-8 px-2 text-xs min-w-[2ch]" style={{ width: 'auto', minWidth: '2ch' }} />
-                                    <span className="text-white/70">；已合作：</span>
-                                    <Input placeholder="是/否" className="inline-flex h-8 px-2 text-xs min-w-[2ch]" style={{ width: 'auto', minWidth: '2ch' }} />
-                                    <span className="text-white/70">；有商机：</span>
-                                    <Input placeholder="是/否" className="inline-flex h-8 px-2 text-xs min-w-[2ch]" style={{ width: 'auto', minWidth: '2ch' }} />
-                                    <span className="text-white/70">；预计签单时间：</span>
-                                    <Input placeholder="YYYY-MM-DD" className="inline-flex h-8 px-2 text-xs min-w-[2ch]" style={{ width: 'auto', minWidth: '2ch' }} />
-                                    <span className="text-white/70">；商机属性：</span>
-                                    <Input placeholder="商机属性" className="inline-flex h-8 px-2 text-xs min-w-[2ch]" style={{ width: 'auto', minWidth: '2ch' }} />
-                                    <span className="text-white/70">；项目类别：</span>
-                                    <Input placeholder="项目类别" className="inline-flex h-8 px-2 text-xs min-w-[2ch]" style={{ width: 'auto', minWidth: '2ch' }} />
-                                    <span className="text-white/70">；预计商机金额：</span>
-                                    <Input placeholder="金额" className="inline-flex h-8 px-2 text-xs min-w-[2ch]" style={{ width: 'auto', minWidth: '2ch' }} />
-                                    <span className="text-white/70">；商机状态：</span>
-                                    <Input placeholder="商机状态" className="inline-flex h-8 px-2 text-xs min-w-[2ch]" style={{ width: 'auto', minWidth: '2ch' }} />
-                                </div>
+                                <span className="text-white/70">客户属于</span>
+                                <AutoResizeInput placeholder="行业" />
+                                <span className="text-white/70">行业；对接人为</span>
+                                <AutoResizeInput placeholder="对接人" />
+                                <span className="text-white/70">；属于</span>
+                                <AutoResizeInput placeholder="部门" />
+                                <span className="text-white/70">部门；base 在</span>
+                                <AutoResizeInput placeholder="所在地" />
+                                <span className="text-white/70">；联系方式为</span>
+                                <AutoResizeInput placeholder="联系方式" />
+                                <span className="text-white/70">；微信号为</span>
+                                <AutoResizeInput placeholder="微信号" />
+                                <span className="text-white/70">；入库时间为</span>
+                                <AutoResizeInput placeholder="YYYY-MM-DD" />
+                                <span className="text-white/70">；联系上客户：</span>
+                                <AutoResizeInput placeholder="是/否" />
+                                <span className="text-white/70">；已合作：</span>
+                                <AutoResizeInput placeholder="是/否" />
+                                <span className="text-white/70">；有商机：</span>
+                                <AutoResizeInput placeholder="是/否" />
+                                <span className="text-white/70">；预计签单时间：</span>
+                                <AutoResizeInput placeholder="YYYY-MM-DD" />
+                                <span className="text-white/70">；商机属性：</span>
+                                <AutoResizeInput placeholder="商机属性" />
+                                <span className="text-white/70">；项目类别：</span>
+                                <AutoResizeInput placeholder="项目类别" />
+                                <span className="text-white/70">；预计商机金额：</span>
+                                <AutoResizeInput placeholder="金额" />
+                                <span className="text-white/70">；商机状态：</span>
+                                <AutoResizeInput placeholder="商机状态" />
+                            </div>
                         </div>
                         <div className="space-y-2">
                             <label className="text-sm font-medium text-white/80">访问报告</label>
