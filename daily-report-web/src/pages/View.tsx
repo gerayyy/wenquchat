@@ -86,6 +86,24 @@ export function View() {
                                     <Clock className="w-4 h-4" />
                                     <span>{client.lastUpdate}</span>
                                 </div>
+                                <div className="space-y-1 text-xs text-white/60">
+                                    <div className="flex flex-wrap gap-x-3 gap-y-1">
+                                        <span>{client.industry} · {client.department}</span>
+                                        <span>对接人: {client.contactPerson}</span>
+                                        <span>所在地: {client.base}</span>
+                                    </div>
+                                    <div className="flex flex-wrap gap-x-3 gap-y-1">
+                                        <span className={cn("px-1.5 py-0.5 rounded", client.contacted ? "bg-green-500/20 text-green-300" : "bg-gray-500/20 text-gray-300")}>
+                                            {client.contacted ? "已联系" : "未联系"}
+                                        </span>
+                                        <span className={cn("px-1.5 py-0.5 rounded", client.cooperated ? "bg-blue-500/20 text-blue-300" : "bg-gray-500/20 text-gray-300")}>
+                                            {client.cooperated ? "已合作" : "未合作"}
+                                        </span>
+                                        <span className={cn("px-1.5 py-0.5 rounded", client.hasBusiness ? "bg-yellow-500/20 text-yellow-300" : "bg-gray-500/20 text-gray-300")}>
+                                            {client.hasBusiness ? "有商机" : "无商机"}
+                                        </span>
+                                    </div>
+                                </div>
                                 {latestReport && (
                                     <div className="p-3 rounded-lg bg-white/5 text-sm text-white/80 italic line-clamp-2 border border-white/5">
                                         "{latestReport.content}"

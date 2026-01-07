@@ -64,9 +64,78 @@ export function Fill() {
                             </div>
                             <span className="px-2 py-1 rounded bg-white/10 text-xs text-white/70 uppercase tracking-wider">{client.status}</span>
                         </div>
-                        <div className="space-y-2">
-                            <label className="text-sm font-medium text-white/80">访问报告</label>
-                            <Textarea placeholder="讨论了什么内容？下一步计划是什么？" className="min-h-[120px]" />
+                        <div className="space-y-4">
+                            <div>
+                                <h4 className="text-sm font-semibold text-white/90 mb-2">基本信息</h4>
+                                <div className="grid grid-cols-1 md:grid-cols-2 gap-2 text-sm">
+                                    <div className="flex flex-wrap items-center gap-1">
+                                        <span className="text-white/70">客户属于</span>
+                                        <Input value={client.industry} className="inline-flex h-8 px-2 text-sm w-auto min-w-[80px]" />
+                                        <span className="text-white/70">行业</span>
+                                    </div>
+                                    <div className="flex flex-wrap items-center gap-1">
+                                        <span className="text-white/70">对接人为</span>
+                                        <Input value={client.contactPerson} className="inline-flex h-8 px-2 text-sm w-auto min-w-[80px]" />
+                                    </div>
+                                    <div className="flex flex-wrap items-center gap-1">
+                                        <span className="text-white/70">属于</span>
+                                        <Input value={client.department} className="inline-flex h-8 px-2 text-sm w-auto min-w-[80px]" />
+                                        <span className="text-white/70">部门</span>
+                                    </div>
+                                    <div className="flex flex-wrap items-center gap-1">
+                                        <span className="text-white/70">base 在</span>
+                                        <Input value={client.base} className="inline-flex h-8 px-2 text-sm w-auto min-w-[80px]" />
+                                    </div>
+                                    <div className="flex flex-wrap items-center gap-1">
+                                        <span className="text-white/70">联系方式为</span>
+                                        <Input value={client.contactInfo} className="inline-flex h-8 px-2 text-sm w-auto min-w-[120px]" />
+                                    </div>
+                                    <div className="flex flex-wrap items-center gap-1">
+                                        <span className="text-white/70">微信号为</span>
+                                        <Input value={client.wechat} className="inline-flex h-8 px-2 text-sm w-auto min-w-[120px]" />
+                                    </div>
+                                    <div className="flex flex-wrap items-center gap-1">
+                                        <span className="text-white/70">入库时间为</span>
+                                        <Input value={client.entryDate} className="inline-flex h-8 px-2 text-sm w-auto min-w-[100px]" />
+                                    </div>
+                                    <div className="flex flex-wrap items-center gap-1">
+                                        <span className="text-white/70">联系上客户：</span>
+                                        <Input value={client.contacted ? '是' : '否'} className="inline-flex h-8 px-2 text-sm w-auto min-w-[60px]" />
+                                    </div>
+                                    <div className="flex flex-wrap items-center gap-1">
+                                        <span className="text-white/70">已合作：</span>
+                                        <Input value={client.cooperated ? '是' : '否'} className="inline-flex h-8 px-2 text-sm w-auto min-w-[60px]" />
+                                    </div>
+                                    <div className="flex flex-wrap items-center gap-1">
+                                        <span className="text-white/70">有商机：</span>
+                                        <Input value={client.hasBusiness ? '是' : '否'} className="inline-flex h-8 px-2 text-sm w-auto min-w-[60px]" />
+                                    </div>
+                                    <div className="flex flex-wrap items-center gap-1">
+                                        <span className="text-white/70">预计签单时间：</span>
+                                        <Input value={client.expectedSignDate} className="inline-flex h-8 px-2 text-sm w-auto min-w-[100px]" />
+                                    </div>
+                                    <div className="flex flex-wrap items-center gap-1">
+                                        <span className="text-white/70">商机属性：</span>
+                                        <Input value={client.businessAttribute} className="inline-flex h-8 px-2 text-sm w-auto min-w-[80px]" />
+                                    </div>
+                                    <div className="flex flex-wrap items-center gap-1">
+                                        <span className="text-white/70">项目类别：</span>
+                                        <Input value={client.projectCategory} className="inline-flex h-8 px-2 text-sm w-auto min-w-[100px]" />
+                                    </div>
+                                    <div className="flex flex-wrap items-center gap-1">
+                                        <span className="text-white/70">预计商机金额：</span>
+                                        <Input value={client.expectedAmount} className="inline-flex h-8 px-2 text-sm w-auto min-w-[80px]" />
+                                    </div>
+                                    <div className="flex flex-wrap items-center gap-1">
+                                        <span className="text-white/70">商机状态：</span>
+                                        <Input value={client.businessStatus} className="inline-flex h-8 px-2 text-sm w-auto min-w-[80px]" />
+                                    </div>
+                                </div>
+                            </div>
+                            <div className="space-y-2">
+                                <label className="text-sm font-medium text-white/80">访问报告</label>
+                                <Textarea placeholder="讨论了什么内容？下一步计划是什么？" className="min-h-[120px]" />
+                            </div>
                         </div>
                     </Card>
                 ))}
@@ -83,8 +152,75 @@ export function Fill() {
                                 <Input placeholder="公司名称" />
                             </div>
                             <div className="space-y-2">
-                                <label className="text-sm font-medium text-white/80">联系人</label>
-                                <Input placeholder="姓名" />
+                                <label className="text-sm font-medium text-white/80">客户简称</label>
+                                <Input placeholder="公司简称 建议6个字以内" />
+                            </div>
+                        </div>
+                        <div>
+                            <h4 className="text-sm font-semibold text-white/90 mb-2">基本信息</h4>
+                            <div className="grid grid-cols-1 md:grid-cols-2 gap-2 text-sm">
+                                <div className="flex flex-wrap items-center gap-1">
+                                    <span className="text-white/70">客户属于</span>
+                                    <Input placeholder="行业" className="inline-flex h-8 px-2 text-sm w-auto min-w-[80px]" />
+                                    <span className="text-white/70">行业</span>
+                                </div>
+                                <div className="flex flex-wrap items-center gap-1">
+                                    <span className="text-white/70">对接人为</span>
+                                    <Input placeholder="对接人" className="inline-flex h-8 px-2 text-sm w-auto min-w-[80px]" />
+                                </div>
+                                <div className="flex flex-wrap items-center gap-1">
+                                    <span className="text-white/70">属于</span>
+                                    <Input placeholder="部门" className="inline-flex h-8 px-2 text-sm w-auto min-w-[80px]" />
+                                    <span className="text-white/70">部门</span>
+                                </div>
+                                <div className="flex flex-wrap items-center gap-1">
+                                    <span className="text-white/70">base 在</span>
+                                    <Input placeholder="所在地" className="inline-flex h-8 px-2 text-sm w-auto min-w-[80px]" />
+                                </div>
+                                <div className="flex flex-wrap items-center gap-1">
+                                    <span className="text-white/70">联系方式为</span>
+                                    <Input placeholder="联系方式" className="inline-flex h-8 px-2 text-sm w-auto min-w-[120px]" />
+                                </div>
+                                <div className="flex flex-wrap items-center gap-1">
+                                    <span className="text-white/70">微信号为</span>
+                                    <Input placeholder="微信号" className="inline-flex h-8 px-2 text-sm w-auto min-w-[120px]" />
+                                </div>
+                                <div className="flex flex-wrap items-center gap-1">
+                                    <span className="text-white/70">入库时间为</span>
+                                    <Input placeholder="YYYY-MM-DD" className="inline-flex h-8 px-2 text-sm w-auto min-w-[100px]" />
+                                </div>
+                                <div className="flex flex-wrap items-center gap-1">
+                                    <span className="text-white/70">联系上客户：</span>
+                                    <Input placeholder="是/否" className="inline-flex h-8 px-2 text-sm w-auto min-w-[60px]" />
+                                </div>
+                                <div className="flex flex-wrap items-center gap-1">
+                                    <span className="text-white/70">已合作：</span>
+                                    <Input placeholder="是/否" className="inline-flex h-8 px-2 text-sm w-auto min-w-[60px]" />
+                                </div>
+                                <div className="flex flex-wrap items-center gap-1">
+                                    <span className="text-white/70">有商机：</span>
+                                    <Input placeholder="是/否" className="inline-flex h-8 px-2 text-sm w-auto min-w-[60px]" />
+                                </div>
+                                <div className="flex flex-wrap items-center gap-1">
+                                    <span className="text-white/70">预计签单时间：</span>
+                                    <Input placeholder="YYYY-MM-DD" className="inline-flex h-8 px-2 text-sm w-auto min-w-[100px]" />
+                                </div>
+                                <div className="flex flex-wrap items-center gap-1">
+                                    <span className="text-white/70">商机属性：</span>
+                                    <Input placeholder="商机属性" className="inline-flex h-8 px-2 text-sm w-auto min-w-[80px]" />
+                                </div>
+                                <div className="flex flex-wrap items-center gap-1">
+                                    <span className="text-white/70">项目类别：</span>
+                                    <Input placeholder="项目类别" className="inline-flex h-8 px-2 text-sm w-auto min-w-[100px]" />
+                                </div>
+                                <div className="flex flex-wrap items-center gap-1">
+                                    <span className="text-white/70">预计商机金额：</span>
+                                    <Input placeholder="金额" className="inline-flex h-8 px-2 text-sm w-auto min-w-[80px]" />
+                                </div>
+                                <div className="flex flex-wrap items-center gap-1">
+                                    <span className="text-white/70">商机状态：</span>
+                                    <Input placeholder="商机状态" className="inline-flex h-8 px-2 text-sm w-auto min-w-[80px]" />
+                                </div>
                             </div>
                         </div>
                         <div className="space-y-2">
