@@ -83,7 +83,7 @@ export function Prepare() {
                                             setNewClientCount(num);
                                         }
                                     }}
-                                    className="pl-10"
+                                    className="pl-10 w-full"
                                     style={{ textIndent: '8px' }} // 确保数字输入时可见
                                 />
                             <Plus className="absolute left-3 top-1/2 -translate-y-1/2 w-4 h-4 text-white/50" />
