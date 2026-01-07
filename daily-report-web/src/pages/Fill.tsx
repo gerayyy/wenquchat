@@ -69,7 +69,9 @@ export function Fill() {
                             <div>
                                 <h4 className="text-sm font-semibold text-white/90 mb-2">基本信息</h4>
                                 <div className="flex flex-wrap items-center gap-1 text-xs">
-                                    <span className="text-white/70">客户属于</span>
+                                    <span className="text-white/70">客户简称</span>
+                                    <AutoResizeInput defaultValue={client.shortName || ''} placeholder="简称" />
+                                    <span className="text-white/70">；客户属于</span>
                                     <AutoResizeInput defaultValue={client.industry} placeholder="行业" />
                                     <span className="text-white/70">行业；对接人为</span>
                                     <AutoResizeInput defaultValue={client.contactPerson} placeholder="对接人" />
@@ -128,8 +130,10 @@ export function Fill() {
                         <div>
                             <h4 className="text-sm font-semibold text-white/90 mb-2">基本信息</h4>
                             <div className="flex flex-wrap items-center gap-1 text-xs">
-                                <span className="text-white/70">客户属于</span>
-                                <AutoResizeInput placeholder="行业" />
+                                    <span className="text-white/70">客户简称</span>
+                                    <AutoResizeInput placeholder="简称" />
+                                    <span className="text-white/70">；客户属于</span>
+                                    <AutoResizeInput placeholder="行业" />
                                 <span className="text-white/70">行业；对接人为</span>
                                 <AutoResizeInput placeholder="对接人" />
                                 <span className="text-white/70">；属于</span>
