@@ -30,13 +30,13 @@ export function Prepare() {
     return (
         <div className="max-w-2xl mx-auto space-y-8 animate-in slide-in-from-bottom-4 duration-500">
             <div className="space-y-2">
-                <h2 className="text-3xl font-bold text-white">Prepare Report</h2>
-                <p className="text-white/70">Select clients you visited today</p>
+                <h2 className="text-3xl font-bold text-white">准备日报</h2>
+                <p className="text-white/70">选择您今天访问的客户</p>
             </div>
 
             <Card className="p-6 space-y-6">
                 <div className="space-y-4">
-                    <label className="text-sm font-medium text-white/80 uppercase tracking-wider">Existing Clients</label>
+                    <label className="text-sm font-medium text-white/80 uppercase tracking-wider">现有客户</label>
                     <div className="flex flex-wrap gap-3">
                         {MOCK_CLIENTS.map(client => {
                             const isSelected = selectedClientIds.includes(client.id);
@@ -62,7 +62,7 @@ export function Prepare() {
                 </div>
 
                 <div className="space-y-4 pt-4 border-t border-white/10">
-                    <label className="text-sm font-medium text-white/80 uppercase tracking-wider">New Clients</label>
+                    <label className="text-sm font-medium text-white/80 uppercase tracking-wider">新客户</label>
                     <div className="flex items-center gap-4">
                         <div className="relative flex-1 max-w-[200px]">
                             <Input
@@ -74,7 +74,7 @@ export function Prepare() {
                             />
                             <Plus className="absolute left-3 top-1/2 -translate-y-1/2 w-4 h-4 text-white/50" />
                         </div>
-                        <span className="text-sm text-white/50">clients visited</span>
+                        <span className="text-sm text-white/50">位客户访问</span>
                     </div>
                 </div>
             </Card>
@@ -86,7 +86,7 @@ export function Prepare() {
                     disabled={selectedClientIds.length === 0 && newClientCount === 0}
                     className="w-full md:w-auto"
                 >
-                    Start Filling <ArrowRight className="ml-2 w-5 h-5" />
+                    开始填写 <ArrowRight className="ml-2 w-5 h-5" />
                 </Button>
             </div>
         </div>

@@ -28,7 +28,7 @@ export function Fill() {
             // Random mock error (10% chance)
             if (Math.random() > 0.9) {
                 setIsSubmitting(false);
-                setError("Network error: Failed to submit reports. Please try again.");
+                setError("网络错误：提交报告失败，请重试。");
                 return;
             }
 
@@ -39,8 +39,8 @@ export function Fill() {
     if (!state) {
         return (
             <div className="flex flex-col items-center justify-center min-h-[50vh] text-white gap-4">
-                <p>No data selected.</p>
-                <Button onClick={() => navigate('/prepare')}>Go Back</Button>
+                <p>未选择数据。</p>
+                <Button onClick={() => navigate('/prepare')}>返回</Button>
             </div>
         );
     }
@@ -50,8 +50,8 @@ export function Fill() {
     return (
         <div className="max-w-2xl mx-auto space-y-8 animate-in slide-in-from-bottom-4 duration-500 pb-24 md:pb-0">
             <div className="space-y-2">
-                <h2 className="text-3xl font-bold text-white">Fill Reports</h2>
-                <p className="text-white/70">Complete the details for each client</p>
+                <h2 className="text-3xl font-bold text-white">填写日报</h2>
+                <p className="text-white/70">为每位客户完成详细信息</p>
             </div>
 
             <div className="space-y-6">
@@ -60,13 +60,13 @@ export function Fill() {
                         <div className="flex justify-between items-start">
                             <div>
                                 <h3 className="text-xl font-semibold text-white">{client.name}</h3>
-                                <p className="text-sm text-white/50">Last update: {client.lastUpdate}</p>
+                                <p className="text-sm text-white/50">更新时间: {client.lastUpdate}</p>
                             </div>
                             <span className="px-2 py-1 rounded bg-white/10 text-xs text-white/70 uppercase tracking-wider">{client.status}</span>
                         </div>
                         <div className="space-y-2">
-                            <label className="text-sm font-medium text-white/80">Visit Report</label>
-                            <Textarea placeholder="What was discussed? What are the next steps?" className="min-h-[120px]" />
+                            <label className="text-sm font-medium text-white/80">访问报告</label>
+                            <Textarea placeholder="讨论了什么内容？下一步计划是什么？" className="min-h-[120px]" />
                         </div>
                     </Card>
                 ))}
@@ -74,22 +74,22 @@ export function Fill() {
                 {Array.from({ length: state.newClientCount }).map((_, i) => (
                     <Card key={`new-${i}`} className="p-6 space-y-4 border-dashed border-white/30 bg-white/5">
                         <div className="flex items-center gap-2 mb-2">
-                            <span className="flex items-center justify-center h-6 px-2 rounded-full bg-blue-500 text-xs font-bold text-white">NEW</span>
-                            <h3 className="text-xl font-semibold text-white">New Client #{i + 1}</h3>
+                            <span className="flex items-center justify-center h-6 px-2 rounded-full bg-blue-500 text-xs font-bold text-white">新</span>
+                            <h3 className="text-xl font-semibold text-white">新客户 #{i + 1}</h3>
                         </div>
                         <div className="grid gap-4 md:grid-cols-2">
                             <div className="space-y-2">
-                                <label className="text-sm font-medium text-white/80">Client Name</label>
-                                <Input placeholder="Company Name" />
+                                <label className="text-sm font-medium text-white/80">客户名称</label>
+                                <Input placeholder="公司名称" />
                             </div>
                             <div className="space-y-2">
-                                <label className="text-sm font-medium text-white/80">Contact Person</label>
-                                <Input placeholder="Name" />
+                                <label className="text-sm font-medium text-white/80">联系人</label>
+                                <Input placeholder="姓名" />
                             </div>
                         </div>
                         <div className="space-y-2">
-                            <label className="text-sm font-medium text-white/80">Visit Report</label>
-                            <Textarea placeholder="Initial meeting details..." className="min-h-[120px]" />
+                            <label className="text-sm font-medium text-white/80">访问报告</label>
+                            <Textarea placeholder="初次会面详情..." className="min-h-[120px]" />
                         </div>
                     </Card>
                 ))}
@@ -110,7 +110,7 @@ export function Fill() {
                         onClick={handleSubmit}
                         isLoading={isSubmitting}
                     >
-                        Submit All Reports <Send className="ml-2 w-4 h-4" />
+                        提交所有报告 <Send className="ml-2 w-4 h-4" />
                     </Button>
                 </div>
             </div>

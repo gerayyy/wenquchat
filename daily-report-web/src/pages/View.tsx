@@ -27,8 +27,8 @@ export function View() {
         <div className="max-w-4xl mx-auto space-y-8 animate-in fade-in duration-500">
             <div className="flex flex-col md:flex-row md:items-center justify-between gap-4">
                 <div className="space-y-1">
-                    <h2 className="text-3xl font-bold text-white">Client Reports</h2>
-                    <p className="text-white/70">Overview of client activities and reports</p>
+                    <h2 className="text-3xl font-bold text-white">客户报告</h2>
+                    <p className="text-white/70">客户活动和报告概览</p>
                 </div>
 
                 <div className="flex items-center gap-2 bg-white/10 p-1 rounded-xl backdrop-blur-sm border border-white/10">
@@ -43,7 +43,7 @@ export function View() {
                                     : "text-white/60 hover:text-white hover:bg-white/10"
                             )}
                         >
-                            {f}
+                            {f === 'all' ? '全部' : f === 'yesterday' ? '昨日' : '本周'}
                         </button>
                     ))}
                 </div>
@@ -53,7 +53,7 @@ export function View() {
                 <Search className="absolute left-3 top-1/2 -translate-y-1/2 w-5 h-5 text-white/40" />
                 <input
                     type="text"
-                    placeholder="Search clients..."
+                    placeholder="搜索客户..."
                     value={searchTerm}
                     onChange={(e) => setSearchTerm(e.target.value)}
                     className="w-full h-12 pl-10 pr-4 rounded-xl bg-white/5 border border-white/10 text-white placeholder:text-white/40 focus:outline-none focus:ring-2 focus:ring-white/20 transition-all"
@@ -99,7 +99,7 @@ export function View() {
                                 className="w-full mt-auto"
                                 onClick={() => setSelectedClientId(client.id)}
                             >
-                                <History className="w-4 h-4 mr-2" /> View History
+                                <History className="w-4 h-4 mr-2" /> 查看历史
                             </Button>
                         </Card>
                     );
@@ -109,7 +109,7 @@ export function View() {
             <Modal
                 isOpen={!!selectedClientId}
                 onClose={() => setSelectedClientId(null)}
-                title="Client History"
+                title="客户历史"
             >
                 <div className="relative border-l border-white/20 ml-3 space-y-8 py-2">
                     {selectedClientHistory.map((event) => (
@@ -123,7 +123,7 @@ export function View() {
                         </div>
                     ))}
                     {selectedClientHistory.length === 0 && (
-                        <p className="text-white/50 text-center py-4">No history available.</p>
+                        <p className="text-white/50 text-center py-4">无历史记录。</p>
                     )}
                 </div>
             </Modal>

@@ -14,8 +14,8 @@ export function Success() {
                 </div>
 
                 <div className="space-y-2">
-                    <h2 className="text-3xl font-bold text-white">Submitted!</h2>
-                    <p className="text-white/70">Your daily reports have been successfully recorded.</p>
+                    <h2 className="text-3xl font-bold text-white">提交成功！</h2>
+                    <p className="text-white/70">您的日报已成功记录。</p>
                 </div>
 
                 <Button
@@ -23,7 +23,7 @@ export function Success() {
                     className="w-full mt-4"
                     variant="secondary"
                 >
-                    <Home className="mr-2 w-4 h-4" /> Back to Home
+                    <Home className="mr-2 w-4 h-4" /> 返回首页
                 </Button>
             </Card>
         </div>

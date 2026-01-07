@@ -14,7 +14,7 @@ function AppContent() {
       <header className="mb-8 flex items-center justify-between">
         <div className="flex items-center gap-2">
           <div className="w-8 h-8 rounded-lg bg-gradient-to-br from-white/20 to-white/5 backdrop-blur-md border border-white/20" />
-          <span className="font-bold text-white/90 tracking-tight">DailyReport</span>
+          <span className="font-bold text-white/90 tracking-tight">日报系统</span>
         </div>
       </header>
 

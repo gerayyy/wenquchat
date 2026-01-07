@@ -8,9 +8,9 @@ export function Home() {
         <div className="flex flex-col items-center justify-center min-h-[80vh] gap-12 animate-in fade-in zoom-in duration-500">
             <div className="text-center space-y-2">
                 <h1 className="text-4xl md:text-5xl font-bold text-white drop-shadow-lg tracking-tight">
-                    Daily Workbench
+                    日报工作台
                 </h1>
-                <p className="text-white/70 text-lg">Select your role to continue</p>
+                <p className="text-white/70 text-lg">选择您的角色继续</p>
             </div>
 
             <div className="flex flex-col md:flex-row gap-8 md:gap-16">
@@ -22,7 +22,7 @@ export function Home() {
                     <div className="p-4 rounded-full bg-blue-500/30 group-hover:bg-blue-500/50 transition-colors z-10">
                         <FileText className="w-10 h-10 text-white" />
                     </div>
-                    <span className="text-xl font-semibold text-white z-10">Fill Report</span>
+                    <span className="text-xl font-semibold text-white z-10">填写日报</span>
                 </button>
 
                 <button
@@ -33,7 +33,7 @@ export function Home() {
                     <div className="p-4 rounded-full bg-purple-500/30 group-hover:bg-purple-500/50 transition-colors z-10">
                         <Users className="w-10 h-10 text-white" />
                     </div>
-                    <span className="text-xl font-semibold text-white z-10">View Reports</span>
+                    <span className="text-xl font-semibold text-white z-10">查看日报</span>
                 </button>
             </div>
         </div>
