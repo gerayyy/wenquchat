@@ -1,4 +1,4 @@
-import { BrowserRouter, Routes, Route, useLocation } from 'react-router-dom';
+import { BrowserRouter, Routes, Route, useLocation, useNavigate } from 'react-router-dom';
 import { Home } from './pages/Home';
 import { Prepare } from './pages/Prepare';
 import { Fill } from './pages/Fill';
@@ -8,11 +8,15 @@ import { AnimatePresence } from 'framer-motion';
 
 function AppContent() {
   const location = useLocation();
+  const navigate = useNavigate();
 
   return (
     <div className="min-h-screen p-4 md:p-8 max-w-7xl mx-auto">
       <header className="mb-8 flex items-center justify-between">
-        <div className="flex items-center gap-2">
+        <div 
+          className="flex items-center gap-2 cursor-pointer hover:opacity-80 transition-opacity"
+          onClick={() => navigate('/')}
+        >
           <div className="w-8 h-8 rounded-lg bg-gradient-to-br from-white/20 to-white/5 backdrop-blur-md border border-white/20" />
           <span className="font-bold text-white/90 tracking-tight">问渠·日报系统</span>
         </div>

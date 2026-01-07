@@ -87,7 +87,7 @@ export function Prepare() {
                                 />
                             <Plus className="absolute left-3 top-1/2 -translate-y-1/2 w-4 h-4 text-white/50" />
                         </div>
-                        <span className="text-sm text-white/50">位客户访问</span>
+                        <span className="text-sm text-white/50">位客户访问(仅支持输入 1-5 之间的数值)</span>
                     </div>
                 </div>
             </Card>
@@ -96,7 +96,7 @@ export function Prepare() {
                 <Button
                     size="lg"
                     onClick={handleNext}
-                    disabled={selectedClientIds.length === 0 && newClientCount === 0}
+                    disabled={selectedClientIds.length === 0 && (newClientCount === '' || newClientCount === 0)}
                     className="w-full md:w-auto"
                 >
                     开始填写 <ArrowRight className="ml-2 w-5 h-5" />
